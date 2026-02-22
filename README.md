@@ -1,6 +1,6 @@
 # TANAAKK Cursor Rules
 
-TANAAKKグループが提供する全アプリで共通利用する Cursor AI ルールです。
+TANAAKKグループが提供する全アプリで共通利用する Cursor AI ルールです。このレポジトリはPublicです。
 
 ## ルール一覧
 
