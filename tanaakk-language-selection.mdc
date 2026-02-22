@@ -1,0 +1,59 @@
+---
+description: TANAAKK SaaS 言語・フレームワーク選択指針（レスポンシブ・横断対応）
+alwaysApply: true
+---
+
+# TANAAKK SaaS 言語・フレームワーク選択指針
+
+新規開発・機能追加時は、**目的に応じた一定法則**で言語・フレームワークを検討すること。
+
+## 1. 選択の原則
+
+| 原則 | 内容 |
+|------|------|
+| **レスポンシブ優先** | モバイル・タブレット・デスクトップで一貫したUXを提供できる技術を選ぶ |
+| **横断再利用** | OMS/WMS/MES/Aura 間でコンポーネント・型定義を共有しやすい構成を優先 |
+| **会計連携** | 金額計算・decimal 精度を厳密に扱える言語を選ぶ |
+
+## 2. 目的別選択マトリクス
+
+| 目的 | 推奨言語/スタック | 理由 |
+|------|-------------------|------|
+| **Web UI（OMS/WMS/MES/Aura）** | TypeScript + React + Next.js + Tailwind | レスポンシブ、SSR、型安全、shadcn/ui との親和性 |
+| **API / BFF** | TypeScript (Node.js) または Python | 既存フロントとの型共有、decimal は Python が有利 |
+| **バッチ・ETL・会計連携** | Python | decimal, pandas, 会計ライブラリの豊富さ |
+| **モバイルネイティブ** | React Native (TypeScript) または Flutter | 横断UIロジックの共有、Flutter は Dart |
+| **インフラ・CI** | YAML, HCL (Terraform), Shell | 宣言的、再現性 |
+
+## 3. 検討フロー（AIが適用する手順）
+
+新規実装依頼を受けたら、以下を順に確認する：
+
+1. **UI が必要か？** → Yes: TypeScript + React/Next.js
+2. **金額計算・会計ロジックが中核か？** → Yes: Python を検討（decimal 厳密）
+3. **既存プロジェクトのスタックは？** → 既存に合わせる（一貫性優先）
+4. **モバイル専用か？** → React Native または Flutter
+5. **API クライアント（Money Forward / Xero）のみか？** → TypeScript で統一、または Python
+
+## 4. レスポンシブ実装の前提
+
+- **CSS**: Tailwind CSS の `sm:` `md:` `lg:` ブレークポイントを標準使用
+- **コンポーネント**: 最小タップ領域 44x44px、`aria-label` 必須
+- **フォント**: Inter, system-ui, sans-serif（可読性・アクセシビリティ）
+
+## 5. 横断利用の推奨構成
+
+```
+packages/
+  shared-types/     # 型定義（TypeScript）← 全アプリで参照
+  ui-components/    # 共通UI（React + Tailwind）
+  api-client/       # 会計API クライアント（TypeScript or Python）
+```
+
+## 6. ユーザーへの確認
+
+言語・スタックの選択が曖昧な場合、実装前に以下を確認する：
+
+- 「既存の OMS/WMS/MES/Aura のスタックに合わせますか？それとも新規選定しますか？」
+- 「会計連携（Money Forward / Xero）はこの機能に含まれますか？」
+- 「モバイルアプリとしても提供しますか？」

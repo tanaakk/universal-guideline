@@ -1,0 +1,41 @@
+---
+description: TANAAKK SaaS 共通UI/UX（OMS/WMS/MES/Aura横断）
+alwaysApply: true
+---
+
+# 共通UI/UXプリンシパル: 汎用モダン・ライトクリーン
+
+## 1. カラーシステム (Light Mode Base)
+
+| 項目 | 値 |
+|------|-----|
+| **Background** | #FFFFFF または #F9FAFB |
+| **Primary** | #3B82F6（信頼感のある Blue） |
+| **Text メイン** | #111827 (Almost Black) |
+| **Text サブ** | #6B7280 (Muted Gray) |
+| **Border** | #E5E7EB（ラインで境界を表現） |
+
+## 2. タイポグラフィ (Universal Sans)
+
+| 項目 | ルール |
+|------|--------|
+| **Font Family** | Inter, system-ui, sans-serif |
+| **Title** | Bold, 1.25rem以上 |
+| **Body** | Normal, 0.875rem ~ 1rem |
+| **Line Height** | 1.5 ~ 1.6 |
+
+## 3. アイコン・コンポーネント
+
+| 項目 | ルール |
+|------|--------|
+| **Library** | Lucide React または Heroicons |
+| **Radius** | 8px (rounded-lg) |
+| **Clickable** | 最小 44x44px のタップ領域 |
+
+## 4. コーディング制約
+
+| 項目 | ルール |
+|------|--------|
+| **Framework** | モバイルネイティブでレスポンシブなモダン言語を選択する |
+| **Consistency** | shadcn/ui 等のデザイントークンと統一 |
+| **Accessibility** | aria-label、セマンティックHTML（nav, main, section） |
