@@ -7,6 +7,7 @@ TANAAKKグループが提供する全アプリで共通利用する Cursor AI �
 | ファイル | 説明 |
 |----------|------|
 | `tanaakk-universal-schema.mdc` | データ設計・会計API連携（JGAAP/IFRS/US GAAP）、UUID v4と規格の対応関係 |
+| `tanaakk-api-first.mdc` | API First / Schema First の開発ワークフロー指針 |
 | `tanaakk-vehicle-geospatial.mdc` | 車両DB・位置情報・建設・FMの汎用スキーマ |
 | `tanaakk-mes-manufacturing.mdc` | MES・縫製・製造（インナーウェア、刺繍糸かせとりき等）の汎用スキーマ |
 | `tanaakk-language-selection.mdc` | 言語・フレームワーク選択指針 |

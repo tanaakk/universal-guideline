@@ -1,0 +1,70 @@
+---
+description: API First / Schema First の開発ワークフロー指針
+alwaysApply: true
+---
+
+# API First / Schema First
+
+API 仕様とデータスキーマを先行して定義し、実装はそれに従う開発アプローチ。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` と併用すること。
+
+## 1. Schema First
+
+データモデルを先に定義してから実装する。
+
+| 項目 | ルール |
+|------|--------|
+| **順序** | エンティティ・属性・リレーションを先に定義してから実装 |
+| **形式** | ER図（Mermaid `erDiagram`）または OpenAPI の `components.schemas` |
+| **ID** | PK/FK は UUID v4。業務コード（JAN, SKU, 品番等）は属性として扱う |
+| **検証** | スキーマと実装（DB・API）の整合性を確認。変数名・構造を一致させる |
+
+### 1.1 スキーマ定義の出力物
+
+- Mermaid 形式の ER 図
+- OpenAPI `components.schemas` の型定義
+- 実装コードとの 100% 一致
+
+## 2. API First
+
+API 仕様を先に定義してから実装する。
+
+| 項目 | ルール |
+|------|--------|
+| **順序** | API 仕様を先に定義してから実装 |
+| **形式** | **OpenAPI 3.0+**（YAML/JSON）をリポジトリで管理 |
+| **エンドポイント** | リソースは UUID で指定。`/products/{product_uuid}` |
+| **検索** | 業務コード（JAN, SKU, GTIN 等）はクエリパラメータとして使用 |
+| **検証** | 実装前に `openapi-typescript` 等で型・クライアントを生成 |
+
+### 2.1 API 定義の出力物
+
+- OpenAPI 仕様ファイル（`openapi.yaml` または `openapi.json`）
+- 生成された型定義（`schema.d.ts` 等）
+- 型安全な API クライアント
+
+### 2.2 エンドポイント設計
+
+```
+GET    /api/v1/products              # 一覧。?sku=, ?gtin= で検索
+GET    /api/v1/products/{product_uuid}  # 詳細。UUID で指定
+POST   /api/v1/products              # 作成
+PATCH  /api/v1/products/{product_uuid}  # 更新
+DELETE /api/v1/products/{product_uuid}  # 削除
+```
+
+## 3. 開発ワークフロー
+
+```
+1. スキーマ定義（ER図 / OpenAPI components.schemas）
+2. API 仕様定義（OpenAPI paths, request/response）
+3. レビュー・合意
+4. 型生成（openapi-typescript 等）
+5. 実装（生成型に従う）
+```
+
+## 4. 禁止事項
+
+- スキーマ・API 仕様なしで実装を開始しない
+- 業務コードをパスパラメータに使用しない（`/products/{sku}` 禁止）
+- OpenAPI と実装の型が乖離しない
