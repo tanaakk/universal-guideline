@@ -78,7 +78,42 @@ OWASP ASVS と MITRE ATT&CK に準拠し、最小権限の原則を適用。ユ�
 
 ## 7. 禁止事項
 
-- パスワード・API キーを平文で保存しない
+- シークレット・API キーは section 8 に従う
 - クライアントのみで入力検証しない
 - 過剰な権限をデフォルト付与しない
-- ログに機密情報（パスワード、トークン）を出力しない
+
+## 8. シークレット・API キー管理（GitHub Security Critical 準拠）
+
+GitHub Secret Scanning が Critical として検知するシークレットの漏洩を防止する。
+
+### 8.1 禁止事項
+
+| 項目 | ルール |
+|------|--------|
+| **コード内ハードコード** | API キー、パスワード、トークン、秘密鍵をソースコードに直接記述しない |
+| **ログ・URL・外部送信** | シークレットをログ、URL クエリ、外部サービス送信に含めない |
+| **平文保存** | DB・設定ファイルに平文で保存しない |
+
+### 8.2 格納方法
+
+| 項目 | ルール |
+|------|--------|
+| **環境変数** | シークレットは環境変数または `.env` で管理 |
+| **.gitignore** | `.env`、`.env.local`、`.env.*.local` を必ず除外 |
+| **.env.example** | 変数名のみのテンプレートをコミット。プレースホルダーで値は含めない |
+| **CI/CD** | 本番は GitHub Actions Secrets、Azure Key Vault 等のプラットフォーム機能を使用 |
+
+### 8.3 検知・防止
+
+| 項目 | ルール |
+|------|--------|
+| **Pre-commit / CI** | git-secrets、gitleaks、ggshield 等でコミット前にスキャン |
+| **GitHub** | Secret Scanning・Push Protection を有効化（可能な環境では必須） |
+| **参照** | [GitHub Secret Scanning](https://docs.github.com/en/code-security/secret-scanning) |
+
+### 8.4 漏洩時
+
+| 項目 | ルール |
+|------|--------|
+| **ローテーション** | 漏洩が疑われる場合は即座にシークレットをローテーション |
+| **履歴削除** | 誤コミットした場合は git 履歴から削除（`git filter-branch` 等） |
