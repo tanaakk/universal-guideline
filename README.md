@@ -19,7 +19,7 @@ TANAAKKグループが提供する全アプリで共通利用する Cursor AI �
 |----|------|----------|
 | **第1層** | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
 | **第2層** | クロスインダストリ | UUID v4, ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
-| **第3層** | インダストリ別 | 建築, 貴金属, 宝石, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品 |
+| **第3層** | インダストリ別 | 建築, 貴金属, 宝石, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life（ミュージオロジー） |
 
 第1層を上位とし、第2層・第3層を下位とする。地球上のGDP上位産業（保険、金融、石油・ガス、医療、農業・食品等）の規格を網羅する。
 
@@ -37,7 +37,7 @@ TANAAKKグループが提供する全アプリで共通利用する Cursor AI �
 | `tanaakk-multi-cloud-iam.mdc` | マルチクラウド IAM 標準（Alibaba/AWS/GCP/Azure 非依存） |
 | `tanaakk-security.mdc` | セキュリティ（OWASP ASVS・MITRE ATT&CK、Form & Password） |
 | `tanaakk-vehicle-geospatial.mdc` | 車両DB・位置情報・建設・FMの汎用スキーマ |
-| `tanaakk-physical-branding-sku.mdc` | 物理ブランディング・SKU（UUID 中核、デジタルツイン）。貴金属・宝石・繊維・元素・宇宙機・時計・メティエダール・発電・保険・金融・石油・ガス・医療・農業・食品の規格 |
+| `tanaakk-physical-branding-sku.mdc` | 物理ブランディング・SKU（UUID 中核、デジタルツイン）。貴金属・宝石・繊維・元素・宇宙機・時計・メティエダール・発電・保険・金融・石油・ガス・医療・農業・食品・Fauna・Flora・Marine life（ミュージオロジー）の規格 |
 | `tanaakk-mes-manufacturing.mdc` | MES・縫製・製造（インナーウェア、刺繍糸かせとりき等）の汎用スキーマ |
 | `tanaakk-language-selection.mdc` | 言語・フレームワーク選択指針 |
 | `tanaakk-ui-ux.mdc` | 共通UI/UX（カラー・タイポ・アクセシビリティ） |

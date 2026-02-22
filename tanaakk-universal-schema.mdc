@@ -97,6 +97,7 @@ TANAAKKグループの全SaaSで共通適用するデータ設計・API・会計
 | 石油・ガス | ISO/TC 67, API | 上流・中流・下流、掘削・生産・パイプライン、海底設備 | 属性。識別には使わない |
 | 医療・ヘルスケア | HL7 FHIR, HL7 v2, ISO 11238, ISO 11616 | 医療データ交換、医薬品識別（IDMP） | 属性。識別は `patient_uuid` 等の UUID |
 | 農業・食品 | ISO 22000, ISO/TC 34, FAO | 食品安全マネジメント、食品製品、農業統計・トレーサビリティ | 属性。識別には使わない |
+| Fauna・Flora・Marine life（ミュージオロジー） | Darwin Core, ABCD, Audubon Core, ISO 21127 (CIDOC CRM), SPNHC, OBIS, EML | 生物標本・観察データ、博物館コレクション、海洋生物多様性 | 属性。識別は `specimen_uuid` 等の UUID |
 
 **原則**: 規格が定義するコード・番号・値はすべて「属性」として格納。結合・参照は常に `*_uuid` (UUID v4) で行う。産業分類コード（ISIC, NACE, CPC, NAICS）は第1層の属性として格納し、PK/FK には使用しない。
 

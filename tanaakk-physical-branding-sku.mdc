@@ -303,7 +303,30 @@ erDiagram
 
 **原則**: 識別子は `product_uuid`、`batch_uuid` 等の UUID。ロット番号・認証コードは規格に従った属性として格納。PK/FK には使用しない。
 
-## 18. 製造・会計メタデータ
+## 18. Fauna・Flora・Marine life（ミュージオロジー・デジタルツイン）
+
+博物館・自然史コレクションにおける Fauna（動物）、Flora（植物）、Marine life（海洋生物）の標本・観察データを扱う場合、以下の国際規格に準拠する。
+
+| 用途 | 規格 | 内容 |
+|------|------|------|
+| **生物多様性データ** | Darwin Core (TDWG) | 標本・観察・発生記録の用語集。taxa、occurrence、specimen |
+| **データ交換** | Darwin Core Archive (DwC-A) | GBIF・OBIS で採用。パッケージ形式 |
+| **コレクションアクセス** | ABCD (TDWG) | 生物コレクションデータの XML スキーマ。ABCDDNA, HISPID 等の拡張 |
+| **マルチメディア** | Audubon Core / Audiovisual Core (TDWG) | 生物多様性の画像・音声・動画メタデータ |
+| **博物館情報** | ISO 21127:2023 (CIDOC CRM) | 文化遺産・博物館の参照オントロジー（ICOM） |
+| **自然史コレクション** | SPNHC | 番号付け、ラベリング、デジタル化のベストプラクティス |
+| **海洋生物** | OBIS | 海洋生物多様性データ。Darwin Core 準拠 |
+| **生態系メタデータ** | EML | 生態系データセットのメタデータ言語 |
+
+| 対象 | 規格 |
+|------|------|
+| **Fauna（動物）・Flora（植物）** | Darwin Core, ABCD, SPNHC |
+| **Marine life（海洋生物）** | Darwin Core, OBIS |
+| **博物館・文化遺産** | ISO 21127 (CIDOC CRM) |
+
+**原則**: 識別子は `specimen_uuid`、`occurrence_uuid` 等の UUID。catalogNumber・occurrenceID は規格に従った属性として格納。PK/FK には使用しない。
+
+## 19. 製造・会計メタデータ
 
 | 項目 | ルール |
 |------|--------|
@@ -319,8 +342,8 @@ interface AccountingMetadata {
 }
 ```
 
-## 19. 禁止事項
+## 20. 禁止事項
 
-- カラーコード・SKU・勘定コード・体型測定値・貴金属品位・宝石グレード・繊維混率・原子番号・元素記号・軌道・姿勢データID・宇宙機部品コード・クロノメーター番号・メティエダール技法コード・論理ノードID・産業分類コード（ISIC, NACE, CPC, NAICS）・ISIN・契約番号・井戸番号・患者IDを PK/FK に使用しない
+- カラーコード・SKU・勘定コード・体型測定値・貴金属品位・宝石グレード・繊維混率・原子番号・元素記号・軌道・姿勢データID・宇宙機部品コード・クロノメーター番号・メティエダール技法コード・論理ノードID・産業分類コード（ISIC, NACE, CPC, NAICS）・ISIN・契約番号・井戸番号・患者ID・catalogNumber・occurrenceIDを PK/FK に使用しない
 - 業務コードに意味を持たせた識別子を設計しない
 - 属性の変更履歴を記録しない運用にしない
