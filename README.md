@@ -1,6 +1,6 @@
 # TANAAKK Cursor Rules
 
-OMS / WMS / MES / Aura 全アプリで共通利用する Cursor AI ルールです。
+TANAAKKグループが提供する全アプリで共通利用する Cursor AI ルールです。
 
 ## ルール一覧
 
