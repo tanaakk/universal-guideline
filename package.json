@@ -1,6 +1,7 @@
 {
   "name": "tanaakk-universal-guideline",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "TANAAKK Cursor Rules - OMS/WMS/MES/Aura 横断",
+  "license": "AGPL-3.0",
   "private": true
 }
