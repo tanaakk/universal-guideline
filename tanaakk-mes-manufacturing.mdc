@@ -1,0 +1,94 @@
+---
+description: MES・縫製・製造（インナーウェア、刺繍糸かせとりき等）向けの汎用データ設計ルール
+alwaysApply: true
+---
+
+# MES・製造 汎用スキーマ
+
+製造実行システム（MES）、縫製（インナーウェア等）、ハンドメイド製造（刺繍糸かせとりき等）を扱うアプリに適用するデータ設計ルール。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` をベースに、`tanaakk-universal-schema.mdc` と併用すること。
+**識別子は常に UUID v4**。規格は属性・単位・プロセスを規定する。対応関係は `tanaakk-universal-schema.mdc` 2.1 を参照。
+
+## 1. MES（製造実行システム）ドメイン
+
+| 項目 | 規格 | ルール |
+|------|------|--------|
+| **PK** | **UUID v4 (RFC 9562)** | `work_order_uuid`, `work_center_uuid`, `equipment_uuid` |
+| **ERP-MES連携** | ISA-95 / IEC 62264 | 製造オペレーションのモデル・用語・オブジェクト |
+| **製造KPI** | ISO 22400 | OEE、稼働率等の定義・算出 |
+| **データ交換** | B2MML | ISA-95のXML実装。連携時は識別子をUUIDでマッピング |
+
+### 1.1 ISA-95 製造オペレーション領域
+
+- **生産オペレーション管理**: 生産指示、実績、スケジュール
+- **品質オペレーション管理**: 検査、試験、合格判定
+- **保全オペレーション管理**: メンテナンス、点検
+- **在庫オペレーション管理**: 原材料、仕掛品、完成品
+
+### 1.2 MES エンティティ関係
+
+```mermaid
+erDiagram
+    WorkOrder ||--o{ WorkCenter : "work_center_uuid"
+    WorkOrder ||--o{ Product : "product_uuid"
+    WorkCenter ||--o{ Equipment : "equipment_uuid"
+    WorkOrder {
+        uuid work_order_uuid PK
+        uuid product_uuid FK
+        uuid work_center_uuid FK
+        string status
+        decimal quantity
+    }
+    Product {
+        uuid product_uuid PK
+        string sku
+        string gtin
+    }
+    WorkCenter {
+        uuid work_center_uuid PK
+        string name
+    }
+    Equipment {
+        uuid equipment_uuid PK
+        uuid work_center_uuid FK
+        string equipment_code
+    }
+```
+
+## 2. 縫製・アパレル製造（インナーウェア等）
+
+ルシアンのインナーウェア等、縫製ビジネスフローに適用。
+
+| 項目 | 規格 | ルール |
+|------|------|--------|
+| **PK** | **UUID v4** | `product_uuid`, `production_lot_uuid`, `sewing_operation_uuid` |
+| **縫製用語** | JIS L 0122 | 縫製用語の参照 |
+| **ステッチ** | JIS L 0120 (ISO 4915) | ステッチ形式の分類・表示記号 |
+| **シーム** | JIS L 0121 (ISO 4916) | シームの分類・表示記号 |
+| **繊維用語** | JIS L 0204〜0206 | 原料・糸・織物の用語 |
+| **品質試験** | JIS L 0105 (ISO 139), JIS L 1093 | 物理試験、縫目強さ |
+| **商品コード** | GTIN, SKU, 品番 | 属性。PK/FK禁止 |
+
+## 3. ハンドメイド・小規模製造（刺繍糸かせとりき等）
+
+COSMO刺繍糸のかせとりき等、小規模・ハンドメイド製造に適用。
+
+| 項目 | 規格 | ルール |
+|------|------|--------|
+| **PK** | **UUID v4** | `equipment_uuid`, `production_batch_uuid`, `material_uuid` |
+| **製造統合** | ISA-95 / IEC 62264 | 離散・小ロット製造にも適用。設備階層モデル |
+| **製造KPI** | ISO 22400 | 小ロット・単品生産のKPI定義 |
+| **繊維・糸** | JIS L 0205 | 糸の用語・分類 |
+
+### 3.1 小規模製造のビジネスフロー
+
+- 受注 → 生産指示 → 製造実行 → 品質確認 → 出荷
+- 設備（かせとりき等）は `equipment_uuid` で管理
+- ロット・バッチは `production_batch_uuid` で管理
+- 原材料・完成品は GTIN/SKU/品番を属性として格納
+
+## 4. 禁止事項
+
+- 製造指示番号・ロット番号・設備コードをPK/FKに使用しない
+- SKU・GTIN・品番を結合キーに使用しない
+- ISA-95/B2MML連携時も、外部システムのIDはUUIDにマッピングして内部で使用

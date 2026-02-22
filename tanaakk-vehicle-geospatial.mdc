@@ -1,0 +1,166 @@
+---
+description: 車両DB・位置情報・建設・FMが必要なアプリ向けの汎用データ設計ルール
+alwaysApply: true
+---
+
+# 車両・位置情報・建設・FM 汎用スキーマ
+
+車両、位置情報、管工事・建設・ビル・ファシリティマネジメントを扱うアプリに適用するデータ設計ルール。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` をベースに、`tanaakk-universal-schema.mdc` と併用すること。
+**識別子は常に UUID v4**。規格は属性・単位・分類を規定する。対応関係は `tanaakk-universal-schema.mdc` 2.1 を参照。
+
+## 1. 車両データベース (Vehicle Domain)
+
+| 項目 | ルール |
+|------|--------|
+| **PK** | `vehicle_uuid`, `vehicle_type_uuid` は **UUID v4** |
+| **FK** | `place_uuid`, `vehicle_type_uuid` 等で結合。業務コードをFKにしない |
+| **車両識別** | 車台番号・ナンバープレート等は「属性」として扱い、PK/結合キーに使用禁止 |
+| **ステータス** | `AVAILABLE`, `RESERVED`, `IN_USE` 等の enum で管理 |
+| **単位** | 燃費=km/L、排気量=cc、寸法=m |
+| **API** | `/vehicles/{vehicle_uuid}`, `/vehicle-types/{vehicle_type_uuid}` でUUID指定 |
+
+### 1.1 車両エンティティ関係
+
+```mermaid
+erDiagram
+    Vehicle ||--o{ VehicleType : "vehicle_type_uuid"
+    Vehicle ||--o{ Place : "place_uuid"
+    Vehicle {
+        uuid vehicle_uuid PK
+        uuid place_uuid FK
+        uuid vehicle_type_uuid FK
+        string name
+        string status
+        string model
+        string version
+    }
+    VehicleType {
+        uuid vehicle_type_uuid PK
+        string name
+        string description
+    }
+    Place {
+        uuid place_uuid PK
+        string name
+        string hub_type
+    }
+```
+
+### 1.2 車両識別属性の規格
+
+車台番号・ナンバープレート・型式はすべて「属性」として扱う。PK/FKには使用しない。
+
+| 属性 | 規格 | ルール |
+|------|------|--------|
+| **VIN（車台番号）** | **ISO 3779** | 17桁英数字。構造・内容は規格に準拠。検索パラメータとして使用可 |
+| **ナンバープレート** | 国別 | `country_code` (ISO 3166-1 alpha-2) と `plate_number` を分離。フォーマットは国別に定義 |
+| **型式** | 国別 | 日本は国土交通省の型式指定に準拠。`model_code` 等で属性として格納 |
+| **PK/FK** | **UUID v4 (RFC 9562)** | 全エンティティの識別子はUUID。VIN・ナンバー・型式を結合キーに使用禁止 |
+
+#### 車両識別属性の格納例
+
+```typescript
+interface VehicleIdentificationAttributes {
+  vin?: string
+  countryCode?: string
+  plateNumber?: string
+  modelCode?: string
+}
+```
+
+## 2. 位置情報 (Location / Geospatial)
+
+| 項目 | ルール |
+|------|--------|
+| **座標系** | **WGS84** (EPSG:4326) を標準とする |
+| **緯度・経度** | `lat` (-90〜90), `lng` (-180〜180)。decimal/numeric 型 |
+| **プロパティ名** | `lat`/`lng` または `latitude`/`longitude` を統一 |
+| **住所** | `postalCode`, `prefecture`, `city`, `street`, `building` を分離管理 |
+| **距離** | 単位は **m**（メートル） |
+| **営業時間** | UTC + ISO 8601。表示はアプリ層でローカル変換 |
+
+### 2.1 位置情報スキーマ
+
+```mermaid
+erDiagram
+    Place ||--o| GeoPoint : "location"
+    Place ||--o| Address : "address"
+    GeoPoint {
+        decimal lat
+        decimal lng
+    }
+    Address {
+        string postalCode
+        string prefecture
+        string city
+        string street
+        string building
+    }
+```
+
+### 2.2 座標 DTO 形式
+
+```typescript
+interface LocationDto {
+  lat: number
+  lng: number
+}
+```
+
+### 2.3 住所 DTO 形式
+
+```typescript
+interface AddressDto {
+  postalCode: string
+  prefecture: string
+  city: string
+  street: string
+  building: string
+}
+```
+
+## 3. 建設・ファシリティマネジメント (Construction / FM Domain)
+
+管工事・建設・ビル管理に適用。**PK/FK は UUID v4**。規格コードは属性として格納。
+
+| 項目 | 規格 | ルール |
+|------|------|--------|
+| **PK** | **UUID v4 (RFC 9562)** | `building_uuid`, `space_uuid`, `equipment_uuid` |
+| **分類コード** | ISO 12006-2 | 建設物・空間の分類。`classification_code` として属性格納。PK/FK禁止 |
+| **用語** | ISO 6707 | 建築・土木の用語定義に準拠 |
+| **面積・容積** | ISO 9836 | 床面積=m²、容積=m³ |
+| **BIM情報** | ISO 19650, ISO 16739 (IFC) | 情報構造の参照。識別はUUID |
+| **FM** | ISO 41001 | FMプロセス・品質の参照 |
+| **管工事** | JIS, JWWA, AJIIS | 配管・設備の材質・口径等は属性 |
+
+### 3.1 建設・FM エンティティ関係
+
+```mermaid
+erDiagram
+    Building ||--o{ Space : "building_uuid"
+    Space ||--o{ Equipment : "space_uuid"
+    Building {
+        uuid building_uuid PK
+        string classification_code
+        decimal floor_area_m2
+    }
+    Space {
+        uuid space_uuid PK
+        uuid building_uuid FK
+        string classification_code
+        decimal area_m2
+    }
+    Equipment {
+        uuid equipment_uuid PK
+        uuid space_uuid FK
+        string equipment_type_code
+    }
+```
+
+## 4. 禁止事項
+
+- VIN・ナンバープレート・型式・分類コードをPK/FKに使用しない
+- 緯度経度を float で格納しない（decimal/numeric を使用）
+- 住所を単一文字列で格納しない（postalCode, prefecture, city 等に分離）
+- 距離・面積単位の混在（m, m² に統一）
