@@ -1,0 +1,78 @@
+---
+description: 物理ブランディング・SKU 管理（UUID v4 中核、デジタルツインモデル）
+alwaysApply: true
+---
+
+# 物理ブランディング・SKU 汎用スキーマ
+
+UUID v4 を中核とした Surrogate Key とデジタルツインモデルを採用。カラー・SKU・会計メタデータを扱うアプリに適用する。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` と併用すること。固有名詞は含めない。
+
+## 1. 設計原則
+
+| 項目 | ルール |
+|------|--------|
+| **Surrogate Key** | 意味を持たない **UUID v4** を唯一の識別子とする |
+| **デジタルツイン** | 物理エンティティのデジタル表現は UUID で一意。属性は変更可能 |
+| **結合** | テーブル間の結合は `*_uuid` のみ。業務コードで結合しない |
+| **履歴** | 属性変更はイミュータブルな監査ログで記録 |
+
+## 2. カラー管理
+
+| 項目 | ルール |
+|------|--------|
+| **識別子** | `color_uuid` (UUID v4)。カラーコードは PK にしない |
+| **属性** | `color_system_type` と `color_code` のペアで保持。必須 |
+| **変更** | カラー体系の変更は属性の更新。履歴を記録 |
+
+```typescript
+interface ColorAttribute {
+  color_system_type: string
+  color_code: string
+}
+```
+
+## 3. SKU・製品マッピング
+
+| 項目 | ルール |
+|------|--------|
+| **識別子** | `product_uuid`, `sku_mapping_uuid` (UUID v4) |
+| **universal_sku_id** | 内部用の一意識別子。UUID v4 または `product_uuid` に紐づく |
+| **マッピング** | 外部システムの SKU コードはマッピングテーブルの属性として保持 |
+| **変更** | 外部 SKU 体系の変更はマッピングの更新。履歴を記録 |
+
+```mermaid
+erDiagram
+    DigitalProduct ||--o{ SkuMapping : "product_uuid"
+    DigitalProduct {
+        uuid product_uuid PK
+    }
+    SkuMapping {
+        uuid sku_mapping_uuid PK
+        uuid product_uuid FK
+        string external_system_type
+        string external_sku_code
+    }
+```
+
+## 4. 製造・会計メタデータ
+
+| 項目 | ルール |
+|------|--------|
+| **識別子** | `product_uuid` に紐づく。勘定コードは PK にしない |
+| **属性** | 原価センター、勘定科目、会計基準を属性として保持 |
+| **変更** | 会計体系の変更は属性の更新。履歴を記録 |
+
+```typescript
+interface AccountingMetadata {
+  cost_center_code?: string
+  account_code?: string
+  accounting_standard?: string
+}
+```
+
+## 5. 禁止事項
+
+- カラーコード・SKU・勘定コードを PK/FK に使用しない
+- 業務コードに意味を持たせた識別子を設計しない
+- 属性の変更履歴を記録しない運用にしない

@@ -50,6 +50,7 @@ TANAAKKグループの全SaaSで共通適用するデータ設計・API・会計
 | 製造データ交換 | B2MML | ISA-95のXML実装 | 連携形式。識別はUUID |
 | 縫製・繊維 | JIS L 系列 | 縫製用語、ステッチ、シーム、繊維用語 | 用語・分類の参照。識別には使わない |
 | IAM | OAuth 2.0, OIDC, JWT, SCIM 2.0 | 認証・認可・プロビジョニング | クラウド非依存。識別はUUID |
+| カラー・SKU | color_system_type + color_code, universal_sku_id | デジタルツインモデル。属性は変更可能 | 識別はUUID。履歴記録 |
 
 **原則**: 規格が定義するコード・番号・値はすべて「属性」として格納。結合・参照は常に `*_uuid` (UUID v4) で行う。
 
