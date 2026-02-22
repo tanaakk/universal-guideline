@@ -56,8 +56,29 @@ TANAAKKグループの全SaaSで共通適用するデータ設計・API・会計
 | 縫製・繊維 | JIS L 系列 | 縫製用語、ステッチ、シーム、繊維用語 | 用語・分類の参照。識別には使わない |
 | IAM | OAuth 2.0, OIDC, JWT, SCIM 2.0 | 認証・認可・プロビジョニング | クラウド非依存。識別はUUID |
 | カラー・SKU | color_system_type + color_code, universal_sku_id | デジタルツインモデル。属性は変更可能 | 識別はUUID。履歴記録 |
+| 受発注・EDI | UN/EDIFACT, GS1 EANCOM, GS1 EDI XML, 流通BMS | 発注・発注応答・出荷案内・受領案内等のメッセージ形式 | 連携形式。識別はUUID。EDIコードは属性としてマッピング |
+| 資金決済 | ISO 20022 | 支払メッセージ（pacs.002, pacs.008 等）。国際送金は ISO 20022 準拠 | 連携形式。識別はUUID |
+| 従業員・プロビジョニング | SCIM 2.0 | ユーザー・グループのプロビジョニング | 連携形式。識別はUUID |
+| 従業員・HR データ | HR Open Standards, JEDx | workers, organizations, 給与レポート等の HR データ交換 | 連携形式。識別はUUID |
 
 **原則**: 規格が定義するコード・番号・値はすべて「属性」として格納。結合・参照は常に `*_uuid` (UUID v4) で行う。
+
+### 2.5 データ連携標準 (Data Interchange Standards)
+
+API ネイティブを前提とし、外部システムとのデータ連携は以下の標準に準拠する。固有システム名は使用しない。
+
+| 用途 | 規格 | メッセージ・形式 | 適用範囲 |
+|------|------|------------------|----------|
+| **受発注（国際）** | UN/EDIFACT | ORDERS（発注）、ORDRSP（発注応答）、DESADV（出荷案内）、RECADV（受領案内） | 国際・業種横断 |
+| **受発注（国際）** | GS1 EANCOM | UN/EDIFACT サブセット。小売・医療・建設等 | 国際 |
+| **受発注（国際）** | GS1 EDI XML | Order, Order Response, Despatch Advice | 国際・API 親和性 |
+| **受発注（国内流通）** | 流通BMS (GS1 日本) | 発注・出荷・受領・返品・請求・支払（8種） | 国内流通 |
+| **輸送** | EDIINT AS1/AS2 | トランスポート通信 | 国際 |
+| **資金決済** | ISO 20022 | pacs.002（支払ステータス）、pacs.008（支払指図）等。国際送金は ISO 20022 準拠 | 国際 |
+| **従業員・プロビジョニング** | SCIM 2.0 | User, Group リソース。IAM 連携 | 国際 |
+| **従業員・HR データ** | HR Open Standards, JEDx | workers, organizations（OpenAPI JSON） | 国際 |
+
+**原則**: 内部は REST/OpenAPI で API ネイティブ。EDI 連携時は B2B ゲートウェイ経由で上記形式に変換。識別子は UUID v4 を維持し、EDI 側のコード（GTIN、品番等）は属性としてマッピングする。
 
 ### 2.2 分散DB・識別子型
 
