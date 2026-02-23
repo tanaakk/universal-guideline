@@ -63,10 +63,16 @@ homotopical-coherence-engine (L5)
 | 項目 | 値 |
 |------|-----|
 | **Synced from** | complex-physics-scale |
-| **Framework version** | v1.3.4 |
+| **Framework version** | v2.1.1 |
 | **Last sync** | 2026-02-23 |
 
 ※ 本ファイルを他リポジトリにコピーする際は、上記を更新すること。
+
+### バージョンルール（05_Folder_Structure_Convention 参照）
+
+- **v2.1.1**: 統一案の初版
+- **パッチ**: v2.1.2, v2.1.3, ...（各リポジトリのパッチ更新で通し番号）
+- **マイナー**: 全リポジトリを同時に v2.2.0 に更新
 
 ---
 
@@ -75,3 +81,4 @@ homotopical-coherence-engine (L5)
 | 日付 | 変更内容 |
 |-----|----------|
 | 2025-02-23 | 初版作成（5 リポジトリ対応関係、Canonical Source 定義） |
+| 2025-02-23 | Framework version v2.1.1、バージョンルール追記 |
