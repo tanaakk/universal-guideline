@@ -6,7 +6,7 @@ alwaysApply: true
 # セキュリティガイドライン
 
 OWASP ASVS と MITRE ATT&CK に準拠し、最小権限の原則を適用。ユーザビリティ・レスポンス・実用性を両立する。
-[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc`、`tanaakk-multi-cloud-iam.mdc` と併用すること。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc`、`tanaakk-multi-cloud-iam.mdc`、`tanaakk-dependency-security.mdc` と併用すること。
 
 ## 1. 参照フレームワーク
 

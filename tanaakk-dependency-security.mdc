@@ -1,0 +1,68 @@
+---
+description: GitHub Security で Critical/High/Moderate を出さないための依存関係・事前ルール
+alwaysApply: true
+---
+
+# 依存関係セキュリティ（GitHub Security 事前防止）
+
+GitHub Security（Dependabot）で Critical / High / Moderate が検出されないよう、**事前に**ルールを適用する。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-security.mdc` と併用すること。
+
+## 1. 原則
+
+| 項目 | ルール |
+|------|--------|
+| **目標** | `npm audit` で Critical / High / Moderate を 0 に保つ |
+| **タイミング** | 新規依存追加時・`npm install` 後・PR マージ前に必ず確認 |
+| **CI** | `npm audit --audit-level=moderate` で失敗させる（推奨） |
+
+## 2. 依存追加時の必須手順
+
+新規パッケージを `package.json` に追加する前に、以下を実施する。
+
+| 手順 | 内容 |
+|------|------|
+| 1 | `npm info <package>` で最新版・メンテナンス状況を確認 |
+| 2 | 一時プロジェクトで `npm init -y && npm i <package>` 後、`npm audit` を実行 |
+| 3 | Critical / High / Moderate が増える場合は、代替パッケージを検討 |
+| 4 | 追加後、プロジェクト全体で `npm audit` を再実行 |
+
+## 3. 既知の間接依存脆弱性への対応
+
+以下のパッケージは ESLint / typescript-eslint 等の間接依存に含まれ、脆弱なバージョンが入りやすい。**`package.json` に `overrides` を必ず含める。**
+
+```json
+"overrides": {
+  "minimatch": "^10.2.2"
+}
+```
+
+| パッケージ | 脆弱性 | 修正バージョン | 備考 |
+|------------|--------|----------------|------|
+| minimatch | ReDoS (GHSA-3ppc-4f35-3m26) | ^10.2.2 | ESLint / typescript-eslint の依存 |
+| ajv | ReDoS (GHSA-2g4f-4pwh-qvx6) | ^8.12.0 | `npm audit fix` で解消可能な場合あり |
+
+新規プロジェクト作成時は、上記 `overrides` を初期設定に含める。
+
+## 4. CI / 開発ワークフロー
+
+| 項目 | ルール |
+|------|--------|
+| **npm audit** | `npm audit --audit-level=moderate` を CI に組み込み。Moderate 以上で失敗 |
+| **lockfile** | `package-lock.json` をコミット。再現性を確保 |
+| **Dependabot** | GitHub リポジトリで Dependabot を有効化（Alerts + Security updates） |
+| **更新** | 定期的に `npm update` と `npm audit` を実行 |
+
+## 5. 修正の優先順位
+
+| 深刻度 | 対応 |
+|--------|------|
+| **Critical** | 即時修正。マージ禁止 |
+| **High** | 24時間以内に修正方針を決定。`overrides` またはパッケージ更新 |
+| **Moderate** | 1週間以内に修正。`npm audit fix` を試行 |
+
+## 6. 禁止事項
+
+- Critical / High / Moderate が残ったまま main にマージしない
+- `npm audit fix --force` をレビューなしで実行しない（破壊的変更の可能性）
+- 脆弱性のあるパッケージを「後で直す」として放置しない
