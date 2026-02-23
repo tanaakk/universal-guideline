@@ -63,7 +63,7 @@ homotopical-coherence-engine (L5)
 | 項目 | 値 |
 |------|-----|
 | **Synced from** | complex-physics-scale |
-| **Framework version** | v2.1.1 |
+| **Framework version** | v2.1.2 |
 | **Last sync** | 2026-02-23 |
 
 ※ 本ファイルを他リポジトリにコピーする際は、上記を更新すること。
