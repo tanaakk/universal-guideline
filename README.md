@@ -32,6 +32,7 @@ TANAAKKグループが提供する全アプリで共通利用する Cursor AI �
 | ファイル | 説明 |
 |----------|------|
 | `tanaakk-universal-schema.mdc` | Universal Data Architecture。規格3層構造（産業分類→クロスインダストリ→インダストリ別）、UUID v4、会計API連携、クロスドメイン結合 |
+| `tanaakk-uuid-hybrid.mdc` | UUID v4/v7 ハイブリッド（デジタルツイン・イベント発行） |
 | `tanaakk-api-first.mdc` | API First / Schema First の開発ワークフロー指針 |
 | `tanaakk-url-sitemap-seo.mdc` | URL・サイトマップの階層化・命名規則（SEO、日本語パス禁止） |
 | `tanaakk-multi-cloud-iam.mdc` | マルチクラウド IAM 標準（Alibaba/AWS/GCP/Azure 非依存） |
