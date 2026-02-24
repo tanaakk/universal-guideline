@@ -154,6 +154,7 @@ LLM により即座に組み立てられたインターフェースが、社会�
 
 ### TANAAKK ルール
 
+- `07_TANAAKK_Engineering_Methodology.md` — 従来型 vs TANAAKK 流のエンジニアリング対比（エンジニア理解深化用）
 - `tanaakk-universal-schema.mdc` — データスキーマ、UUID v4/v7、規格階層
 - `tanaakk-api-first.mdc` — Schema First / API First の開発ワークフロー
 - `uuid-classification-rules/` — 業種別の v4/v7 採番ルール（製造小売、不動産・建設）
