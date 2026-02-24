@@ -20,13 +20,19 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | **L1** | 同上 | 横断的 concerns | — |
 | **L2** | 同上 | ドメイン横断 | — |
 | **L3** | **Universal Guideline** | **UUID v4**。識別子規格。対象（identity）の層 | 対象 |
-| **L4** | **Universal Guideline** | 車両・製造・建設・貴金属・医療等の規格 | L3 対象への**射**としての属性 |
+| **L4** | **Universal Guideline** | 対象への射としての属性 | L3 対象への**射** |
+| **L4A** | 同上 | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
+| **L4B** | 同上 | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4C** | 同上 | インダストリ別 | 建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life |
 | **L5** | **Universal Guideline** | プロジェクト | L4 を前提とした実装 |
 
 ```
 L3: 対象（UUID v4 で識別された点）
        ↓ 射
-L4: 属性（VIN, SKU, ISIC, 品番等 — 対象への写像として表現）
+L4: 属性
+  ├── L4A: 産業分類
+  ├── L4B: クロスインダストリ
+  └── L4C: インダストリ別
        ↓
 L5: プロジェクト
 ```
@@ -49,7 +55,7 @@ flowchart TD
         U[tanaakk-uuid-hybrid.mdc]
     end
 
-    subgraph L4["L4: 属性（射）"]
+    subgraph L4["L4: 属性（L4A/L4B/L4C）"]
         B[tanaakk-api-first.mdc]
         C[tanaakk-security.mdc]
         D[tanaakk-multi-cloud-iam.mdc]
@@ -87,7 +93,10 @@ flowchart TD
 | **L1** | （groundism 外） | 横断的 concerns |
 | **L2** | （groundism 外） | ドメイン横断 |
 | **L3** | Universal Guideline | **UUID v4** を識別子規格として採用。PK/FK、時間、単位、通貨、会計、クロスドメイン結合 |
-| **L4** | Universal Guideline | 車両・製造・建設・貴金属・医療等の規格。**L3 対象への射としての属性**。VIN, SKU, ISIC, 品番等は属性として格納 |
+| **L4** | Universal Guideline | 対象への射としての属性 |
+| **L4A** | Universal Guideline | 産業分類（国家・国際管理）。ISIC, NACE, CPC, NAICS |
+| **L4B** | Universal Guideline | クロスインダストリ。ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4C** | Universal Guideline | インダストリ別。建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life |
 | **L5** | Universal Guideline | プロジェクト固有のコーディング規約（Zustand、react-query-kit 等） |
 
 ## 3. 重複チェック

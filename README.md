@@ -20,18 +20,18 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | 層 | 内容 | 主な規格・ルール |
 |----|------|------------------|
 | **L3** | UUID v4。識別子規格。対象の層 | tanaakk-universal-schema.mdc, tanaakk-uuid-hybrid.mdc |
-| **L4** | 対象への射としての属性 | 車両・製造・建設・貴金属・医療等。VIN, SKU, ISIC, 品番等は属性として格納 |
+| **L4** | 対象への射としての属性 | L4A（産業分類）、L4B（クロスインダストリ）、L4C（インダストリ別） |
 | **L5** | プロジェクト | プロジェクト固有のコーディング規約 |
 
-## 規格の階層（属性としての3層）
+## L4 の下位階層（L4A, L4B, L4C）
 
 `tanaakk-universal-schema.mdc` 2.1 では、規格を以下の階層で位置付ける。これらは L4 の**射（属性）**として L3 の UUID v4 対象に付与される。
 
 | 層 | 内容 | 主な規格 |
 |----|------|----------|
-| **第1層** | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
-| **第2層** | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
-| **第3層** | インダストリ別 | 建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life（ミュージオロジー） |
+| **L4A** | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
+| **L4B** | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4C** | インダストリ別 | 建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life（ミュージオロジー） |
 
 **識別子は UUID v4 のみ。** 上記規格コードはすべて属性として格納し、PK/FK には使用しない。
 
@@ -43,7 +43,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 
 | ファイル | 説明 |
 |----------|------|
-| `tanaakk-universal-schema.mdc` | Universal Data Architecture。規格3層構造（産業分類→クロスインダストリ→インダストリ別）、UUID v4、会計API連携、クロスドメイン結合 |
+| `tanaakk-universal-schema.mdc` | Universal Data Architecture。規格階層（L4A/L4B/L4C）、UUID v4、会計API連携、クロスドメイン結合 |
 | `tanaakk-uuid-hybrid.mdc` | UUID v4/v7 ハイブリッド（デジタルツイン・イベント発行） |
 | `tanaakk-api-first.mdc` | API First / Schema First の開発ワークフロー指針 |
 | `tanaakk-url-sitemap-seo.mdc` | URL・サイトマップの階層化・命名規則（SEO、日本語パス禁止） |
