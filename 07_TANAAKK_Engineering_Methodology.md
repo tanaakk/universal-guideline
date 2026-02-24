@@ -144,6 +144,7 @@ TANAAKK 流は、**従来のアプリケーションとは破壊的に異なる 
 - `06_Universal_Schema_Concept.md` — ユニバーサルスキーマの概念、理論と実装のギャップ
 - `tanaakk-saas-procedure.mdc` — ドメイン先行・UI 先行リリース
 - `tanaakk-uuid-hybrid.mdc` — UUID v4/v7 ハイブリッド、計算資源節約のスキーマ構成
+- `uuid-classification-rules/` — 業種別採番ルール（ドメイン定義に基づく従属レイヤーの具体化）
 
 ---
 
