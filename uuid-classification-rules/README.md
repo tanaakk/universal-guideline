@@ -34,11 +34,12 @@ TANAAKK 流のエンジニアリングでは、古いアプリを参照せず **
 
 ## 参照
 
-- `06_Universal_Schema_Concept.md` — ユニバーサルスキーマの概念、理論と実装のギャップ、従属レイヤー
-- `07_TANAAKK_Engineering_Methodology.md` — 従来型 vs TANAAKK 流のエンジニアリング対比
-- `tanaakk-uuid-hybrid.mdc` — デュアルID設計（logic_id/phys_id）、検索戦略、計算資源節約のスキーマ構成
+### 上位の採番ルール（本ケーススタディの前提）
+
+- `tanaakk-uuid-hybrid.mdc` — デュアルID設計（logic_id/phys_id）、検索戦略、計算資源節約のスキーマ構成。**公式仕様（RFC 9562, RFC 4122）への参照を含む**
 - `tanaakk-universal-schema.mdc` — 規格階層（L4A/L4B/L4C）
 
-## 補足：3PL 倉庫・ハンディターミナル
+### 概念・方法論
 
-製造小売業のケーススタディには、3PL 倉庫におけるハンディターミナル（HT）の規格を反映した採番ルールを記載している。バーコード種別（1D/2D/QR）、ロケーションコード体系（エリア-通路-棚-段）、伝票コード体系（入荷/出荷/内部移動）は属性として扱い、個別端末情報や固有名詞は使用しない。
+- `06_Universal_Schema_Concept.md` — ユニバーサルスキーマの概念、理論と実装のギャップ、従属レイヤー
+- `07_TANAAKK_Engineering_Methodology.md` — 従来型 vs TANAAKK 流のエンジニアリング対比

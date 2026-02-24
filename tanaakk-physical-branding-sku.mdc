@@ -6,7 +6,7 @@ alwaysApply: true
 # 物理ブランディング・SKU 汎用スキーマ
 
 UUID v4 を中核とした Surrogate Key とデジタルツインモデルを採用。カラー・SKU・会計メタデータを扱うアプリに適用する。
-[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` と併用すること。固有名詞は含めない。
+[universal-guideline](https://github.com/tanaakk/universal-guideline) の `tanaakk-universal-schema.mdc` と併用すること。
 
 **規格階層**: `tanaakk-universal-schema.mdc` 2.1 では、L4A（産業分類: ISIC, NACE, CPC, NAICS）を上位とし、L4B（クロスインダストリ）、L4C（インダストリ別）を下位とする階層を定義する。本ドキュメントの貴金属・宝石・繊維・時計・メティエダール等は L4C に該当する。
 
