@@ -16,7 +16,7 @@ alwaysApply: true
 - [RFC 9562](https://www.rfc-editor.org/rfc/rfc9562.html) — Universally Unique Identifiers (UUIDs)。UUIDv4 は Section 5.4、UUIDv7 は Section 5.7。RFC 4122 を置き換え（2024年）
 - [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122) — A UUID URN Namespace。UUIDv4 は Section 4.4（旧仕様、RFC 9562 により obsolete）
 
-本ドキュメントは RFC の**生成アルゴリズム**を前提とし、**どのエンティティに v4/v7 を付与するか**のビジネスルールを定義する。業種別の具体化は `uuid-classification-rules/` を参照。
+本ドキュメントは RFC の**生成アルゴリズム**を前提とし、**どのエンティティに v4/v7 を付与するか**のビジネスルールを定義する。業種別の具体化は `uuid-classification-rules/` を参照。採番要否の条件検討のヒントとなる参考文献（サロゲートキー vs ナチュラルキー、コスト・リターンのトレードオフ、収益認識と識別子）は `uuid-classification-rules/README.md` の「参考文献」セクションを参照。
 
 ## 1. 3層レイヤー（Universal Guideline L3）
 
