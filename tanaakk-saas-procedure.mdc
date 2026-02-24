@@ -11,17 +11,27 @@ alwaysApply: true
 
 ## 1. 従来型との違い
 
-### 1.1 従来のソフトウェア製法
+### 1.1 従来のソフトウェア製法（ISO/JIS 準拠）
 
-業務要件の確定 → 要件定義 → ER図 → API設計書 → プロトタイプ作成、の順で進む。
+従来型は、[ISO/IEC/IEEE 12207:2017](https://www.iso.org/standard/63712.html)（JIS X 0160:2021）、[ISO/IEC/IEEE 29148:2018](https://www.iso.org/standard/72089.html)（要求エンジニアリング）、[共通フレーム 2013](https://www.ipa.go.jp/sec/publish/commonframe2013.html)（IPA）等で標準化されたベストプラクティスに沿った流れである。
+
+| 順序 | プロセス | 規格上の対応 | 主な成果物 |
+|------|----------|--------------|------------|
+| 1 | 業務要件定義 | 共通フレーム「業務要件定義プロセス」 | 業務要件定義書 |
+| 2 | システム/ソフトウェア要件定義 | ISO/IEC/IEEE 29148、12207「System/Software Requirements Definition」 | 要件定義書、要件仕様書 |
+| 3 | システム方式設計・ソフトウェア方式設計 | 12207「Architecture Definition」「Design Definition」 | 方式設計書、ER図、API設計書 |
+| 4 | ソフトウェア詳細設計 | 12207「Design Definition」 | 詳細設計書 |
+| 5 | 実装・プロトタイピング | 12207「Implementation」 | プロトタイプ、本番システム |
+
+上記の順で、上流から下流へ進む（ウォーターフォール型）。アジャイル系では反復するが、要件・設計の区別は同様に維持される。
 
 ### 1.2 TANAAKK との対比
 
-| 従来型 | TANAAKK 標準プロシージャ |
-|--------|---------------------------|
-| 要件定義書を作成してから設計・開発 | **ドメインを決めるとアプリセットが決まる**。要件書は後追い |
+| 従来型（ISO 12207 / 共通フレーム準拠） | TANAAKK 標準プロシージャ |
+|----------------------------------------|---------------------------|
+| 要件定義プロセス → 設計プロセス → 実装の順で進行 | **ドメインを決めるとアプリセットが決まる**。要件書は後追い |
 | プロトタイプ → 本番の順でリリース | **最終系の UI を v1.0.0 として先に公開** |
-| 機能を段階的に追加 | バリューチェーンに応じたアプリ群が**最初から存在**する |
+| 機能を段階的に追加（反復型でも要件・設計の区別を維持） | バリューチェーンに応じたアプリ群が**最初から存在**する |
 
 ### 1.3 ウォーターフォールでもアジャイルでもない
 
@@ -135,6 +145,14 @@ LLM により即座に組み立てられたインターフェースが、社会�
 スキーマが決まれば procedure が決まる（groundism-ontopologics）。**スキーマと procedure は同一リポジトリ（universal-guideline）でパッケージングする。** 分離すると決定の連鎖が断ち切られる。
 
 ## 11. 参照
+
+### 従来型の規格（比較対象）
+
+- [ISO/IEC/IEEE 12207:2017](https://www.iso.org/standard/63712.html) — Systems and software engineering — Software life cycle processes（JIS X 0160:2021）
+- [ISO/IEC/IEEE 29148:2018](https://www.iso.org/standard/72089.html) — Life cycle processes — Requirements engineering
+- [共通フレーム 2013](https://www.ipa.go.jp/sec/publish/commonframe2013.html) — ソフトウェア・システムのライフサイクル共通枠組み（IPA）
+
+### TANAAKK ルール
 
 - `tanaakk-universal-schema.mdc` — データスキーマ、UUID v4/v7、規格階層
 - `tanaakk-api-first.mdc` — Schema First / API First の開発ワークフロー
