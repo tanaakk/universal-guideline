@@ -35,6 +35,10 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 
 **識別子は UUID v4 のみ。** 上記規格コードはすべて属性として格納し、PK/FK には使用しない。
 
+## パッケージング方針
+
+スキーマが決まれば procedure が決まる（[groundism-ontopologics](https://github.com/tanaakk/groundism-ontopologics)）。**スキーマ・procedure・UUID 採番ルール・業種別ケーススタディは同一リポジトリでパッケージングする。** 分離すると決定の連鎖が断ち切られる。
+
 ## ルールの階層・抽象度
 
 共通ルールの抽象度レベルと重複チェックは `HIERARCHY.md` を参照。L3（UUID v4）→ L4（属性・射）→ L5（プロジェクト）の順で適用する。
@@ -44,7 +48,9 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | ファイル | 説明 |
 |----------|------|
 | `tanaakk-universal-schema.mdc` | Universal Data Architecture。規格階層（L4A/L4B/L4C）、UUID v4、会計API連携、クロスドメイン結合 |
-| `tanaakk-uuid-hybrid.mdc` | UUID v4/v7 ハイブリッド（デジタルツイン・イベント発行） |
+| `tanaakk-uuid-hybrid.mdc` | UUID v4/v7 ハイブリッド（デジタルツイン・イベント発行、計算資源節約のスキーマ構成） |
+| `uuid-classification-rules/` | 業種別ケーススタディ（製造小売業、不動産・建設業の v4/v7/採番なし 分類） |
+| `tanaakk-saas-procedure.mdc` | TANAAKK SaaS 標準プロシージャ（ドメイン先行・UI 先行 v1.0.0 リリース） |
 | `tanaakk-api-first.mdc` | API First / Schema First の開発ワークフロー指針 |
 | `tanaakk-url-sitemap-seo.mdc` | URL・サイトマップの階層化・命名規則（SEO、日本語パス禁止） |
 | `tanaakk-multi-cloud-iam.mdc` | マルチクラウド IAM 標準（Alibaba/AWS/GCP/Azure 非依存） |
