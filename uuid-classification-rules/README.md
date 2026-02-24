@@ -45,8 +45,8 @@ TANAAKK 流のエンジニアリングでは、古いアプリを参照せず **
 
 | 業種 | ファイル | 中心となる価値 |
 |------|----------|------------------|
-| 製造小売業 | [manufacturing-retail.md](./manufacturing-retail.md) | モノ。消費者が最終所有者 |
-| 不動産・建設業 | [real-estate-construction.md](./real-estate-construction.md) | 空間・資産。購入者・賃借人が利用者 |
+| 製造小売業 | [manufacturing-retail.md](./manufacturing-retail.md) | モノ。消費者が最終所有者。無形資産（ブランド、特許・商標）を含む |
+| 不動産・建設業 | [real-estate-construction.md](./real-estate-construction.md) | 空間・資産。購入者・賃借人が利用者。無形資産（ブランド、ライセンス）を含む |
 
 ## 参照
 
