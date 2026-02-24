@@ -12,13 +12,15 @@ alwaysApply: true
 - [UUIDの数理解釈](https://www.tanaakk.com/2026/02/23/uuid/)
 - [UUIDハイブリッドストラクチャの検討](https://www.tanaakk.com/2026/02/23/uuid-2/)
 
-## 1. 3層レイヤー
+## 1. 3層レイヤー（Universal Guideline L3）
 
-| レイヤー | 内容 | UUID |
-|----------|------|------|
-| **ID (Identity)** | 何ものにも依存しない乱数の点 | UUID v4 |
-| **時空 (Space-Time)** | 時間軸、座標、エントロピー | UUID v7（記録順序） |
-| **属性 (Attribute)** | 部品特性、SKU、ステータス、ワークフロー | 属性として格納 |
+UUID v4 は **Universal Guideline の L3** に位置づけられる（[groundism-ontopologics](https://github.com/tanaakk/groundism-ontopologics) 階層と同様）。車両・製造・建設・貴金属・医療等の規格は、UUID v4 で記録された対象への**射**として表現される属性（L4）である。
+
+| レイヤー | 内容 | UUID | 階層 |
+|----------|------|------|------|
+| **ID (Identity)** | 何ものにも依存しない乱数の点 | UUID v4 | L3 |
+| **時空 (Space-Time)** | 時間軸、座標、エントロピー | UUID v7（記録順序） | L3 |
+| **属性 (Attribute)** | 部品特性、SKU、ステータス、ワークフロー。対象への射 | 属性として格納 | L4 |
 
 ## 2. デュアルID設計
 
