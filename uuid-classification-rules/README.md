@@ -17,6 +17,22 @@ TANAAKK 流のエンジニアリングでは、古いアプリを参照せず **
 | **Object（対象）** | L3 Identity | 実体。製品、原材料、建物、契約等 |
 | **Morphism（射）** | L4 Attribute への射 | 関係・行動・イベント。対象間の結合 |
 
+## 採番の本質：Accounting 問題としての採番
+
+**採番は Computing 問題ではなく、Accounting 問題である。**
+
+識別子を振る条件は、技術的制約ではなく会計・ファイナンスの観点で決まる。
+
+| 観点 | 内容 | 識別子の役割 |
+|------|------|--------------|
+| **過去の数字の集計（Accounting）** | Revenue Recognition（収益認識）、Asset Depreciation（減価償却） | 集計単位の識別。契約・履行義務・資産の一意な特定 |
+| **未来の価値算定（Valuation）** | Discounted Cash Flow（DCF）の前提となるインジケーター | キャッシュフロー発生源の識別。プロジェクト・資産・オプションの特定 |
+| **オプション・機会コスト** | Real option、Opportunity cost の算定 | 意思決定の分岐点・代替案の識別 |
+
+これらの条件は CAIA（Chartered Alternative Investment Analyst）や CFA Institute 等が標準化している評価・バリュエーションの枠組みと整合する。採番要否は、当該エンティティが上記の会計・ファイナンスの対象となるかどうかで判断する。
+
+**計算ロジックの前提**: Revenue Recognition につながる Object や Morphism に識別子を付与するという考え方の前提となる計算ロジック（DCF バリュエーション、公正価値算定、無形資産評価等）は [intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic) を参照。
+
 ## 採番原則（要約）
 
 | 採番 | 条件 |
@@ -38,6 +54,7 @@ TANAAKK 流のエンジニアリングでは、古いアプリを参照せず **
 
 - `tanaakk-uuid-hybrid.mdc` — デュアルID設計（logic_id/phys_id）、検索戦略、計算資源節約のスキーマ構成。**公式仕様（RFC 9562, RFC 4122）への参照を含む**
 - `tanaakk-universal-schema.mdc` — 規格階層（L4A/L4B/L4C）
+- [intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic) — Revenue Recognition につながる Object・Morphism に識別子を付与する考え方の前提となる計算ロジック（DCF、公正価値算定、無形資産評価）
 
 ### 概念・方法論
 
@@ -78,3 +95,10 @@ TANAAKK 流のエンジニアリングでは、古いアプリを参照せず **
 |------|--------|
 | [Design considerations for Enterprise Entity Identifier](https://kodali-satish.medium.com/design-conciderations-for-enterprise-entity-identifier-d5c7092b385) | 顧客・ベンダー・製品等の**ビジネス上重要なエンティティ**にエンタープライズ識別子を付与 |
 | [GS1 Global Traceability Standard](https://www.gs1.org/standards/gs1-global-traceability-standard/current-standard) | 製品（GTIN）、ロケーション（GLN）、イベントの識別。トレーサビリティの前提 |
+
+### 会計・ファイナンスの標準化（採番条件の枠組み）
+
+| 文献 | ヒント |
+|------|--------|
+| [CAIA: Standards of Practice](https://caia.org/content/standards-practice) | オルタナティブ投資のバリュエーション・評価の専門資格。DCF、Real option、機会コスト等の算定枠組み |
+| [CFA Institute: Standards of Practice Handbook](https://www.cfainstitute.org/en/ethics-standards/codes/standards-of-practice-guidance) | 投資分析・評価の倫理・専門基準。CAIA カリキュラムが参照 |
