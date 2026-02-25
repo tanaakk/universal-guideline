@@ -1,0 +1,80 @@
+---
+description: .gitignore 除外すべき一般項目の定義（自動適用）
+alwaysApply: true
+---
+
+# .gitignore 除外すべき一般項目
+
+`.gitignore` 作成・編集時は以下を適用する。`tanaakk-security.mdc` 8.2 と整合。
+
+## 1. 必須除外（セキュリティ）
+
+| パターン | 理由 |
+|---------|------|
+| `.env` | 環境変数・シークレット |
+| `.env.local` | ローカル環境変数 |
+| `.env.*.local` | 環境別ローカル設定 |
+| `*.pem` | 秘密鍵 |
+| `*.key` | 秘密鍵 |
+| `secrets/` | シークレット格納 |
+
+## 2. 一般除外項目（全プロジェクト共通）
+
+### 依存・パッケージ
+| パターン | 対象 |
+|---------|------|
+| `node_modules/` | Node.js |
+| `.npm` | npm キャッシュ |
+| `.pnpm-store/` | pnpm |
+| `venv/` `.venv/` `env/` | Python |
+| `__pycache__/` | Python |
+| `*.egg-info/` `*.egg` | Python |
+| `vendor/` | Go, PHP |
+| `.bundle/` | Ruby |
+
+### ビルド・成果物
+| パターン | 対象 |
+|---------|------|
+| `dist/` `build/` `out/` | ビルド出力 |
+| `*.tsbuildinfo` | TypeScript |
+| `*.log` | ログ |
+| `.cache/` | キャッシュ |
+
+### IDE・エディタ
+| パターン | 対象 |
+|---------|------|
+| `.idea/` | JetBrains |
+| `.vscode/` | VS Code（プロジェクト固有設定のみ） |
+| `*.swp` `*.swo` | Vim |
+
+### OS
+| パターン | 対象 |
+|---------|------|
+| `.DS_Store` | macOS |
+| `Thumbs.db` | Windows |
+
+## 3. テンプレート（新規 .gitignore 用）
+
+```gitignore
+# === セキュリティ（必須） ===
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# === 依存・ビルド ===
+node_modules/
+dist/
+build/
+out/
+*.log
+.cache/
+
+# === ローカル・IDE・OS ===
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+```
