@@ -1,0 +1,63 @@
+---
+description: ISA-95 準拠マルチサイト階層・Auth 単一 PDP（Policy Decision Point）・Scope-Based ABAC（Attribute-Based Access Control）による職務分掌設計
+alwaysApply: true
+---
+
+# MES アクセス制御・職務分掌
+
+ISA-95（製造統合国際標準、IEC 62264 と同等）準拠のマルチサイト階層モデルを採用し、Auth（認証・認可サービス）を唯一の PDP（Policy Decision Point、ポリシー決定ポイント）とした Scope-Based ABAC（Attribute-Based Access Control、範囲指定型属性ベースアクセス制御）による職務分掌設計。
+`tanaakk-mes-manufacturing.mdc`、`tanaakk-multi-cloud-iam.mdc`、`tanaakk-security.mdc` と併用すること。
+
+## 1. 設計原則
+
+| 項目 | ルール |
+|------|--------|
+| **階層モデル** | ISA-95（製造統合標準）/ IEC 62264 準拠のマルチサイト階層を採用 |
+| **認可ポイント** | Auth（認証・認可サービス）を唯一の PDP（Policy Decision Point）とする |
+| **認可方式** | Scope-Based ABAC（Attribute-Based Access Control、範囲指定型属性ベースアクセス制御） |
+| **職務分掌** | 製造オペレーション領域ごとに職務分掌を設計 |
+
+## 2. ISA-95（製造統合標準）マルチサイト階層
+
+| 階層 | 用途 |
+|------|------|
+| **Enterprise** | 企業全体 |
+| **Site** | 工場・拠点 |
+| **Area** | エリア・工程 |
+| **Work Center** | 作業センター |
+| **Work Unit** | 作業単位・設備 |
+
+識別子は `*_uuid`。サイト・エリア・作業センターは階層で紐づける。
+
+## 3. Auth 単一 PDP（Policy Decision Point）
+
+| 項目 | ルール |
+|------|--------|
+| **PDP** | 認可判断は Auth（認証・認可）サービスのみで実施。他サービスは PEP（Policy Enforcement Point、ポリシー実行ポイント）として委譲 |
+| **トークン** | JWT（JSON Web Token）に scope・属性（site_uuid, area_uuid, role 等）を含める |
+| **検証** | 各 API（Application Programming Interface）は Auth の判定結果を信頼。二重チェックは Auth 内で完結 |
+
+## 4. Scope-Based ABAC（Attribute-Based Access Control）
+
+| 項目 | ルール |
+|------|--------|
+| **属性** | `user_uuid`, `role_uuid`, `site_uuid`, `area_uuid`, `work_center_uuid` 等を属性として評価 |
+| **スコープ** | アクセス可能な範囲（サイト・エリア・作業センター）をスコープで限定 |
+| **ポリシー** | 「ロール X は サイト A の エリア Y に対して 操作 Z を実行可能」形式で定義 |
+
+## 5. 職務分掌（製造オペレーション領域）
+
+ISA-95 の 4 領域に対応した職務分掌を設計する。
+
+| 領域 | 職務分掌の例 |
+|------|--------------|
+| **生産オペレーション** | 生産指示発行 / 実績入力 / スケジュール変更 を分離 |
+| **品質オペレーション** | 検査実施 / 合格判定 / 不適合処置 を分離 |
+| **保全オペレーション** | 点検実施 / メンテナンス承認 / 設備停止 を分離 |
+| **在庫オペレーション** | 入出庫 / 棚卸 / 在庫調整 を分離 |
+
+## 6. 禁止事項
+
+- 認可判断を各サービスで分散実装しない（Auth 単一 PDP（Policy Decision Point）に集約）
+- サイト・エリアのスコープなしで全拠点アクセスを許可しない
+- 職務分掌を無視した単一ロールでの全操作許可を設定しない

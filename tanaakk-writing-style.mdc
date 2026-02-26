@@ -1,0 +1,31 @@
+---
+description: ドキュメント・ルール記述の文体ルール（略称の括弧説明必須）
+alwaysApply: true
+---
+
+# 記述スタイルルール
+
+ルール・ドキュメント作成時に従う文体ルール。
+
+## 略称の括弧説明
+
+**略称・頭字語は初出時に必ず括弧で説明する。**
+
+| 形式 | 例 |
+|------|-----|
+| `略称（正式名称・英語）` | PDP（Policy Decision Point）、ABAC（Attribute-Based Access Control） |
+| `略称（日本語説明）` | PDP（ポリシー決定ポイント） |
+
+### 例
+
+```
+❌ Auth を唯一の PDP とする
+✅ Auth を唯一の PDP（Policy Decision Point）とする
+
+❌ Scope-Based ABAC による職務分掌
+✅ Scope-Based ABAC（Attribute-Based Access Control、属性ベースアクセス制御）による職務分掌
+```
+
+### 対象
+
+技術用語・規格略称・業界用語の略称はすべて初出時に括弧説明を付与する。
