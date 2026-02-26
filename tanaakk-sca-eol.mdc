@@ -1,0 +1,85 @@
+---
+description: SCA（Software Composition Analysis）・EOL（End of Life）管理の国際規格準拠ルール
+alwaysApply: true
+---
+
+# SCA・EOL 管理ルール
+
+Software Composition Analysis（SCA、ソフトウェア構成分析）と End of Life（EOL、サポート終了）管理を国際規格に準拠して実施する。
+`tanaakk-dependency-security.mdc`、`tanaakk-security.mdc` と併用すること。
+
+## 1. 参照する国際規格
+
+| 領域 | 規格 | 策定団体 | 内容 |
+|------|------|----------|------|
+| **SBOM** | ISO/IEC 5962 | ISO/IEC | SPDX（Software Package Data Exchange）— SBOM（Software Bill of Materials、ソフトウェア材料表）国際標準 |
+| **SBOM** | ECMA-424 | ECMA | CycloneDX — SBOM 形式（ソフトウェア・ハードウェア・ML モデル対応） |
+| **EOL** | OpenEoX | OASIS Open | EOL（End of Life）/ EOS（End of Support、サポート終了）の機械可読形式（策定中） |
+| **最小要素** | NTIA ガイドライン | NTIA（National Telecommunications and Information Administration、米国） | EO 14028 準拠の SBOM 最小必須項目 |
+
+## 2. SCA（Software Composition Analysis）
+
+### 2.1 原則
+
+| 項目 | ルール |
+|------|--------|
+| **SBOM 生成** | ビルド成果物ごとに SBOM を生成。形式は SPDX または CycloneDX |
+| **スキャン頻度** | コミット時・PR 時・リリース時に SCA を実行 |
+| **CI 統合** | SCA ツール（npm audit、Snyk、Trivy 等）を CI に組み込み |
+| **閾値** | Critical / High でビルド失敗。`tanaakk-dependency-security.mdc` と整合 |
+
+### 2.2 SBOM 最小要素（NTIA 準拠）
+
+| 要素 | 内容 |
+|------|------|
+| 作成者 | ツール名・バージョン |
+| タイムスタンプ | 生成日時（ISO 8601） |
+| コンポーネント名 | パッケージ名 |
+| バージョン | セマンティックバージョン |
+| サプライヤ | メンテナ・ベンダー |
+| 一意識別子 | PURL（Package URL、パッケージ URL）または SPDX ID |
+| 暗号ハッシュ | SHA-256 等 |
+| 関係性 | 依存関係（depends-on） |
+| ライセンス | SPDX ライセンス ID |
+
+### 2.3 推奨ツール
+
+| 用途 | ツール例 |
+|------|----------|
+| Node.js | `npm audit`、`cyclonedx-npm`、Snyk |
+| 汎用 | Trivy、Syft、OWASP Dependency-Check |
+| SBOM 出力 | SPDX、CycloneDX 形式をサポートするツールを優先 |
+
+## 3. EOL（End of Life）管理
+
+### 3.1 原則
+
+| 項目 | ルール |
+|------|--------|
+| **監視** | 依存パッケージ・ランタイム・フレームワークの EOL/EOS を定期確認 |
+| **OpenEoX** | 策定完了後は OpenEoX 形式の EOL データを参照・連携 |
+| **対応期限** | EOL 発表から 6 ヶ月以内に移行方針を決定。12 ヶ月以内に移行完了を目標 |
+
+### 3.2 EOL 検知時の対応
+
+| フェーズ | アクション |
+|----------|------------|
+| **検知** | EOL アナウンスをキャッチ。Dependabot、Renovate、ベンダー通知を監視 |
+| **評価** | 代替パッケージ・アップグレードパスを調査 |
+| **計画** | 移行スケジュール・ロールバック手順を文書化 |
+| **実行** | 段階的移行。テスト・本番の順で適用 |
+| **検証** | 移行後の SCA・E2E（End-to-End、結合）テストで動作確認 |
+
+### 3.3 主要ランタイム・フレームワーク
+
+| 対象 | 確認先 |
+|------|--------|
+| Node.js | [Release Schedule](https://nodejs.org/en/about/releases/) |
+| Python | [PEP 11](https://peps.python.org/pep-0011/)（Python Enhancement Proposal、Python 拡張提案） |
+| その他 | ベンダー公式の EOL ポリシー |
+
+## 4. 禁止事項
+
+- SBOM なしで本番リリースしない
+- EOL 済みのランタイム・フレームワークを本番で継続使用しない（例外時は文書化・リスク受容）
+- SCA 結果を無視して Critical / High を放置しない
