@@ -1,0 +1,110 @@
+---
+description: TANAAKK GAAS 標準スタック実装ルール（SolidJS / Bun / Drizzle / Tailwind）
+alwaysApply: true
+---
+
+# TANAAKK GAAS 標準スタック実装ルール
+
+GAAS 標準スタックで実装する際の必須ルール。**1 ファイル 1 機能（Self-contained）**を意識し、AI がメンテナンスしやすい、技術負債ゼロのクリーンなコードを出力する。
+
+`tanaakk-stack-selection.mdc`、`tanaakk-ui-ux.mdc`、`tanaakk-api-first.mdc` と併用すること。
+
+## 1. スタック構成
+
+| レイヤー | 技術 | ルール |
+|----------|------|--------|
+| **UI** | SolidJS | Signals を使用。仮想 DOM（Virtual DOM）的な再レンダリングを避け、ピンポイントで更新 |
+| **Styling** | Tailwind CSS v4 | 外部 CSS ファイルを作らず、Utility クラスで完結 |
+| **Runtime** | Bun | Node.js / Docker 前提のコードを避け、Bun ネイティブの高速 API を活用 |
+| **Database** | Drizzle ORM（Object-Relational Mapping） | 生の SQL は禁止。`schema.ts` の型定義に基づき、Type-safe なクエリで記述 |
+| **Visual** | Lucide（On-demand）+ System-Native フォント | アイコンは使用分のみインポート。フォントは `tanaakk-ui-ux.mdc` 2 章に準拠 |
+
+## 2. UI（SolidJS）
+
+| ルール | 内容 |
+|--------|------|
+| **Signals** | `createSignal` / `createMemo` / `createEffect` で状態管理。コンポーネント全体の再レンダリングを避ける |
+| **仮想 DOM 回避** | React 的な `useState` + 再レンダリングパターンを使わない。Signal の変更は依存する DOM のみ更新 |
+| **分割** | 1 コンポーネント = 1 責務。肥大化したら分割 |
+
+```typescript
+// ✅ GOOD: Signal でピンポイント更新
+const [count, setCount] = createSignal(0)
+return <button onClick={() => setCount(c => c + 1)}>{count()}</button>
+
+// ❌ BAD: 仮想 DOM 的な全体再レンダリングを誘発するパターン
+```
+
+## 3. Styling（Tailwind CSS v4）
+
+| ルール | 内容 |
+|--------|------|
+| **外部 CSS 禁止** | `*.css` を新規作成しない。`@tailwind` のみ使用可 |
+| **Utility クラス** | `className="flex items-center gap-2 rounded-lg p-4"` 形式でスタイルを記述 |
+| **カスタム** | 必要時は `@theme` で CSS 変数を拡張。`tanaakk-ui-ux.mdc` のカラーシステムに準拠 |
+
+## 4. Runtime（Bun）
+
+| ルール | 内容 |
+|--------|------|
+| **Node.js API 回避** | `require('fs')` 等の Node 固有 API を直接使わない。Bun の `Bun.file` / `Bun.write` 等を優先 |
+| **Docker 前提禁止** | `process.env.NODE_ENV` 等の Node 慣習は最小限。Bun の `Bun.env` を検討 |
+| **パッケージ** | `bun install` / `bun run` を使用。`npm` は互換のため可 |
+
+## 5. Database（Drizzle ORM）
+
+| ルール | 内容 |
+|--------|------|
+| **生 SQL 禁止** | `db.query` や `sql` タグで直接 SQL を書かない。Drizzle のクエリビルダーを使用 |
+| **schema.ts** | エンティティ・カラムは `schema.ts` で型定義。マイグレーションは `drizzle-kit` で生成 |
+| **Type-safe** | クエリ結果は型推論される。`as` による型キャストは避ける |
+
+```typescript
+// ✅ GOOD: Drizzle の型安全クエリ
+import { eq } from "drizzle-orm"
+import { db } from "./db"
+import { users } from "./schema"
+const result = await db.select().from(users).where(eq(users.id, id))
+
+// ❌ BAD: 生 SQL
+await db.execute(sql`SELECT * FROM users WHERE id = ${id}`)
+```
+
+## 6. Visual（アイコン・フォント）
+
+| ルール | 内容 |
+|--------|------|
+| **Lucide On-demand** | SolidJS は `lucide-solid`。`import { ChevronRight, Settings } from "lucide-solid"` 形式。全アイコン一括インポート禁止 |
+| **System-Native フォント** | `font-sans` または `font-family: ui-sans-serif, system-ui, sans-serif` |
+| **参照** | `tanaakk-ui-ux.mdc` 2 章・3 章 |
+
+## 7. コード構造（1 ファイル 1 機能）
+
+| ルール | 内容 |
+|--------|------|
+| **Self-contained** | 1 ファイル = 1 機能（コンポーネント / 関数 / モジュール）。横断的に複数責務を混ぜない |
+| **AI メンテナンス性** | ファイル名・関数名・変数名で意図が明確。コメントは「なぜ」を書く |
+| **技術負債ゼロ** | 暫定実装（`TODO` / `FIXME`）を残さない。完成するまでコミットしない |
+
+### 7.1 ディレクトリ例
+
+```
+src/
+├── components/     # 1 ファイル = 1 コンポーネント
+│   ├── Button.tsx
+│   └── UserCard.tsx
+├── db/
+│   ├── schema.ts   # Drizzle スキーマ定義
+│   └── index.ts    # DB 接続
+├── routes/         # 1 ファイル = 1 ルート
+└── lib/            # 1 ファイル = 1 ユーティリティ
+```
+
+## 8. 禁止事項
+
+- 生 SQL の使用
+- 外部 CSS ファイルの新規作成（Tailwind 除外）
+- Node.js 固有 API の直接使用（Bun 代替がある場合）
+- `lucide-solid` / `lucide-react` の全アイコン一括インポート
+- 1 ファイルに複数責務を混在
+- `TODO` / `FIXME` を残したままマージ
