@@ -15,9 +15,43 @@ alwaysApply: true
 |------|------|
 | **最先端** | ビルド速度・ランタイム性能・開発効率で最新の技術を採用 |
 | **効果実証済み** | 本番運用実績があり、エコシステムが成熟しているものを優先 |
+| **技術負債回避** | 非推奨・EOL 近い技術を避け、長期保守可能な組み合わせを選ぶ |
 | **提案ロジック** | ユーザーが古いスタックを指定した場合、最先端の代替を提案する |
 
-## 2. 推奨スタック（Web アプリ・ERP 等）
+## 2. アプリパターン別推奨スタック
+
+技術負債にならない最新スタックを、アプリの種類に応じて推奨する。
+
+### 2.1 共通ベーススタック
+
+| レイヤー | 推奨 | 選定理由 |
+|----------|------|----------|
+| **ビルド言語** | TypeScript v7（Native） | 超高速コンパイル。AI が型定義を正確に理解 |
+| **ビルドツール** | Vite v8 + Rolldown | ビルド時間ほぼゼロ。Web 標準に近い |
+| **CSS** | Tailwind CSS v4 | 零設定・軽量 |
+| **ランタイム** | Bun | Node.js より 3 倍速。パッケージ・テスト・実行を 1 つで完結 |
+
+### 2.2 パターン別推奨
+
+| アプリパターン | フレームワーク | 追加・特記事項 |
+|----------------|----------------|----------------|
+| **EC サイト** | SolidJS + Astro（商品一覧・詳細は SSG） | SEO 必須。商品ページは SSG（Static Site Generation、静的サイト生成）、カート・決済は SPA（Single Page Application）。Stripe 等の決済 SDK は最新版を使用 |
+| **ソーシャルメディア** | SolidJS | リアルタイム更新（WebSocket / Server-Sent Events）。画像・動画は CDN（Content Delivery Network）+ 遅延読み込み。PWA（Progressive Web App）対応でオフライン可読を検討 |
+| **動画サイト** | SolidJS + 動画プレイヤー（HLS.js / Video.js） | HLS（HTTP Live Streaming）または DASH（Dynamic Adaptive Streaming over HTTP）でストリーミング。CDN 必須。サムネイル・メタデータは API（Application Programming Interface）で取得 |
+| **コーポレートサイト** | Astro + SolidJS（島アーキテクチャ） | コンテンツ中心。SSG で SEO・表示速度を最大化。フォーム等のインタラクティブ部分のみ SolidJS 島 |
+| **社内 ERP 等** | SolidJS | フォーム・ダッシュボード・一覧が中心。SPA で十分。`tanaakk-mes-access-control.mdc` の認可設計と連携 |
+
+### 2.3 パターン別補足
+
+| パターン | 技術負債を避けるポイント |
+|----------|--------------------------|
+| **EC サイト** | 決済 SDK は常に最新。PCI DSS 準拠（`tanaakk-security.mdc` 参照）。在庫・価格は API でリアルタイム取得 |
+| **ソーシャルメディア** | 無限スクロールは仮想化（Virtualization）でメモリ負荷を抑制。メディアは WebP/AVIF で最適化 |
+| **動画サイト** | HLS/DASH はブラウザネイティブまたは軽量ライブラリ。EOL の Flash 系は使用しない |
+| **コーポレートサイト** | 静的生成を優先。CMS（Content Management System）連携は Headless（API 経由）。jQuery 等のレガシーは採用しない |
+| **社内 ERP** | 認可（Auth 単一 PDP（Policy Decision Point））・職務分掌を設計。`tanaakk-mes-access-control.mdc` 準拠 |
+
+## 3. 推奨スタック詳細（社内 ERP 等）
 
 社内 200 名規模の ERP（Enterprise Resource Planning、基幹業務システム）等、エンタープライズ Web アプリ向けの推奨構成。
 
@@ -29,16 +63,16 @@ alwaysApply: true
 | **CSS** | Tailwind CSS v4 | CSS 変数ベースの零設定（Zero-config）設計。ビルドが軽量 |
 | **ランタイム** | Bun | Node.js より 3 倍速い。パッケージ管理・テスト・実行を 1 つで完結 |
 
-## 3. 適用フロー（AI が実行するロジック）
+## 4. 適用フロー（AI が実行するロジック）
 
 新規アプリ作成依頼を受けたら、以下を順に実行する。
 
-1. **スタック指定の有無** → 未指定: 上記推奨スタックを提案
-2. **指定スタックの評価** → 仮想 DOM 依存（React 等）、遅いビルド（Webpack 等）、Node.js 単体 等の場合、最先端の代替を提案
-3. **規模・用途の確認** → ERP・社内ツール・SaaS 等に応じてスタックを調整
-4. **既存プロジェクト** → 既存リポジトリに合わせる場合は一貫性を優先。新規の場合は推奨スタックを推す
+1. **アプリパターンの特定** → EC・ソーシャル・動画・コーポレート・社内 ERP 等を判定
+2. **スタック指定の有無** → 未指定: パターン別推奨スタック（2.2）を提案
+3. **指定スタックの評価** → 仮想 DOM 依存（React 等）、遅いビルド（Webpack 等）、Node.js 単体 等の場合、最先端の代替を提案
+4. **既存プロジェクト** → 既存リポジトリに合わせる場合は一貫性を優先。新規の場合はパターン別推奨を適用
 
-## 4. 最先端でない場合の提案例
+## 5. 最先端でない場合の提案例
 
 | 指定スタック | 提案する代替 | 理由 |
 |--------------|--------------|------|
@@ -48,7 +82,65 @@ alwaysApply: true
 | Tailwind v3 | Tailwind v4 | 零設定・CSS 変数ベース |
 | JavaScript | TypeScript | 型安全・AI 理解性 |
 
-## 5. 例外
+## 6. 新規プロジェクトで廃止すべき技術
+
+よく使われているが、新規プロジェクトでは採用しないこと。技術負債・EOL（End of Life、サポート終了）・保守性の観点で廃止を推奨する。
+
+### 6.1 言語・ランタイム
+
+| 廃止推奨 | 理由 | 代替 |
+|----------|------|------|
+| **JavaScript（プレーン）** | 型なし。大規模で保守困難。AI の理解性が低い | TypeScript |
+| **CoffeeScript** | 衰退。TypeScript に置き換え済み | TypeScript |
+| **Ruby 2.6 以前** | EOL。セキュリティ更新なし | Ruby 3.x または他言語 |
+| **Python 2** | EOL（2020 年終了） | Python 3.x |
+| **PHP 7.x** | EOL。PHP 8 未満は非推奨 | PHP 8.x または他言語 |
+| **Perl 5（レガシー）** | 新規採用は稀。保守人材減少 | Python / TypeScript |
+
+### 6.2 フレームワーク・ライブラリ
+
+| 廃止推奨 | 理由 | 代替 |
+|----------|------|------|
+| **Create React App（CRA）** | メンテナンスモード。Vite が事実上の標準 | Vite + SolidJS / React |
+| **AngularJS（1.x）** | EOL（2021 年）。Angular 2+ は別物 | Angular 17+ / SolidJS |
+| **Vue 2** | 2023 年 EOL。Composition API は Vue 3 | Vue 3 / SolidJS |
+| **jQuery** | DOM 操作はモダンフレームワークで代替。新規採用不要 | SolidJS / Vanilla JS（必要時） |
+| **Lodash（過剰使用）** | 多くの機能は ES ネイティブで代替可能。必要最小限に | ネイティブ Array / Object |
+| **Moment.js** | 重い。イミュータブルでない。非推奨 | date-fns / Day.js / Temporal API |
+
+### 6.3 ビルドツール
+
+| 廃止推奨 | 理由 | 代替 |
+|----------|------|------|
+| **Webpack（単体）** | 設定が複雑。ビルドが遅い。Vite が軽量・高速 | Vite + Rolldown |
+| **Parcel 1.x** | 開発停滞。Parcel 2 は別途 | Vite |
+| **Gulp / Grunt** | タスクランナー時代の遺物。Vite 等で代替 | Vite のプラグイン |
+| **Bower** | 廃止済み。npm / pnpm / Bun に移行済み | npm / pnpm / Bun |
+
+### 6.4 CSS
+
+| 廃止推奨 | 理由 | 代替 |
+|----------|------|------|
+| **Bootstrap 3** | EOL。Bootstrap 5 は別物 | Tailwind CSS v4 / Bootstrap 5 |
+| **Sass（過剰導入）** | CSS 変数・ネストがネイティブ対応。単純案件では不要 | Tailwind / ネイティブ CSS |
+| **CSS-in-JS（styled-components 等）** | ランタイムオーバーヘッド。SSR（Server-Side Rendering）で問題になりやすい | Tailwind / CSS Modules |
+| **BEM（Block Element Modifier）単体** | 手動命名は保守コスト大。ユーティリティファーストが主流 | Tailwind |
+| **IE 向けハック** | IE は終了。`-ms-` 等は不要 | モダンブラウザのみ対象 |
+
+### 6.5 その他
+
+| 廃止推奨 | 理由 | 代替 |
+|----------|------|------|
+| **Flash / Shockwave** | EOL。ブラウザ非対応 | HTML5 / WebGL / 動画（HLS） |
+| **Yarn 1（Classic）** | Yarn 2+（Berry）または pnpm / Bun が推奨 | pnpm / Bun |
+| **Babel 単体（過剰）** | モダンブラウザ向けなら Vite がトランスパイル済み | Vite 内蔵 |
+| **CommonJS（新規）** | ESM（ECMAScript Modules、ES モジュール）が標準 | ESM |
+
+### 6.6 例外（既存プロジェクト）
+
+既存リポジトリの拡張・保守では上記技術の継続使用を許容する。移行コストとリスクを評価した上で段階的移行を検討する。
+
+## 7. 例外
 
 | 条件 | 対応 |
 |------|------|
