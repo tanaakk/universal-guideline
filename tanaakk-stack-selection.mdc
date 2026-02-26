@@ -169,7 +169,7 @@ alwaysApply: true
 
 | プロジェクトの性質 | 推奨スタック | 理由 |
 |-------------------|--------------|------|
-| **高度な業務 Web アプリ / SaaS** | **SolidJS + Bun + Drizzle** | GAAS 標準。スピードと保守性の極致 |
+| **高度な業務 Web アプリ / SaaS** | **SolidJS + Bun + Drizzle + SQLite（LibSQL）** | GAAS 標準。スピードと保守性の極致。`tanaakk-gaas-implementation.mdc` 参照 |
 | **AI 分析 / ビッグデータ処理** | **Python（FastAPI）** | 数学・AI ライブラリの資産活用 |
 | **静的メディア / SEO 重視サイト** | **Astro** | JavaScript ゼロによる究極の軽さ |
 | **レガシー移行 / 大規模基幹系** | **Next.js / Java / .NET** | 既存エコシステムと人材の安定性 |

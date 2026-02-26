@@ -5,21 +5,37 @@ alwaysApply: true
 
 # TANAAKK GAAS 標準スタック実装ルール
 
-GAAS 標準スタックで実装する際の必須ルール。**1 ファイル 1 機能（Self-contained）**を意識し、AI がメンテナンスしやすい、技術負債ゼロのクリーンなコードを出力する。
+**Universal Guideline の適用ルール**として参照する。GAAS 標準スタックで実装する際の必須ルール。**1 ファイル 1 機能（Self-contained）**を意識し、AI がメンテナンスしやすい、技術負債ゼロのクリーンなコードを出力する。
+
+足りない項目があれば、本ルールに追加できる（セクション 11 参照）。
 
 `tanaakk-stack-selection.mdc`、`tanaakk-ui-ux.mdc`、`tanaakk-api-first.mdc` と併用すること。
 
-## 1. スタック構成
+## 1. GAAS 次世代標準スタックの全容
+
+「部分を直すと全体が壊れる」という負債を徹底的に排除し、エンジニアが**ビジネスロジック**だけに集中できる環境を定義する。「所有する重いインフラ」を捨て、**ポータブルな資産**へと転換するための技術マトリクス。
+
+| 領域 | 旧構成（負債） | 新構成（GAAS 標準） | 導入のメリット |
+|------|----------------|---------------------|----------------|
+| **UI 基盤** | React（仮想 DOM） | SolidJS（Signals） | 部分変更が全体に波及せず、指に吸い付く操作感を実現 |
+| **スタイリング** | 独自 CSS ファイル | Tailwind CSS v4 | デザインを HTML 内で完結。AI（Cursor）による UI 生成を高速化 |
+| **実行環境** | Node.js / Docker | Bun | 環境構築とビルドを秒単位へ。コンテナの重さを排除 |
+| **DB 管理（言語）** | 生の SQL 直接管理 | Drizzle ORM | SQL を「型」で統治。DB 変更による事故を未然に防ぐ |
+| **DB エンジン（実体）** | PostgreSQL / MySQL | SQLite（LibSQL） | 単一ファイルで完結する資産。LibSQL は Turso による SQLite フォーク。サーバーレス / エッジで爆速 |
+| **フォント / アイコン** | Web フォント / SVG 管理 | System-Native / Lucide | 読み込み容量ゼロ。AI への指示が容易な標準シンボル |
+
+## 2. スタック構成（詳細）
 
 | レイヤー | 技術 | ルール |
 |----------|------|--------|
 | **UI** | SolidJS | Signals を使用。仮想 DOM（Virtual DOM）的な再レンダリングを避け、ピンポイントで更新 |
 | **Styling** | Tailwind CSS v4 | 外部 CSS ファイルを作らず、Utility クラスで完結 |
 | **Runtime** | Bun | Node.js / Docker 前提のコードを避け、Bun ネイティブの高速 API を活用 |
-| **Database** | Drizzle ORM（Object-Relational Mapping） | 生の SQL は禁止。`schema.ts` の型定義に基づき、Type-safe なクエリで記述 |
+| **DB 管理** | Drizzle ORM（Object-Relational Mapping） | 生の SQL は禁止。`schema.ts` の型定義に基づき、Type-safe なクエリで記述 |
+| **DB エンジン** | SQLite（LibSQL） | LibSQL は Turso による SQLite フォーク。単一ファイル。サーバーレス / エッジ対応 |
 | **Visual** | Lucide（On-demand）+ System-Native フォント | アイコンは使用分のみインポート。フォントは `tanaakk-ui-ux.mdc` 2 章に準拠 |
 
-## 2. UI（SolidJS）
+## 3. UI（SolidJS）
 
 | ルール | 内容 |
 |--------|------|
@@ -43,7 +59,7 @@ return <button onClick={() => setCount(c => c + 1)}>{count()}</button>
 | **Utility クラス** | `className="flex items-center gap-2 rounded-lg p-4"` 形式でスタイルを記述 |
 | **カスタム** | 必要時は `@theme` で CSS 変数を拡張。`tanaakk-ui-ux.mdc` のカラーシステムに準拠 |
 
-## 4. Runtime（Bun）
+## 5. Runtime（Bun）
 
 | ルール | 内容 |
 |--------|------|
@@ -51,7 +67,7 @@ return <button onClick={() => setCount(c => c + 1)}>{count()}</button>
 | **Docker 前提禁止** | `process.env.NODE_ENV` 等の Node 慣習は最小限。Bun の `Bun.env` を検討 |
 | **パッケージ** | `bun install` / `bun run` を使用。`npm` は互換のため可 |
 
-## 5. Database（Drizzle ORM）
+## 6. Database（Drizzle ORM + SQLite / LibSQL）
 
 | ルール | 内容 |
 |--------|------|
@@ -70,7 +86,7 @@ const result = await db.select().from(users).where(eq(users.id, id))
 await db.execute(sql`SELECT * FROM users WHERE id = ${id}`)
 ```
 
-## 6. Visual（アイコン・フォント）
+## 7. Visual（アイコン・フォント）
 
 | ルール | 内容 |
 |--------|------|
@@ -78,7 +94,7 @@ await db.execute(sql`SELECT * FROM users WHERE id = ${id}`)
 | **System-Native フォント** | `font-sans` または `font-family: ui-sans-serif, system-ui, sans-serif` |
 | **参照** | `tanaakk-ui-ux.mdc` 2 章・3 章 |
 
-## 7. コード構造（1 ファイル 1 機能）
+## 8. コード構造（1 ファイル 1 機能）
 
 | ルール | 内容 |
 |--------|------|
@@ -86,7 +102,7 @@ await db.execute(sql`SELECT * FROM users WHERE id = ${id}`)
 | **AI メンテナンス性** | ファイル名・関数名・変数名で意図が明確。コメントは「なぜ」を書く |
 | **技術負債ゼロ** | 暫定実装（`TODO` / `FIXME`）を残さない。完成するまでコミットしない |
 
-### 7.1 ディレクトリ例
+### 8.1 ディレクトリ例
 
 ```
 src/
@@ -100,7 +116,7 @@ src/
 └── lib/            # 1 ファイル = 1 ユーティリティ
 ```
 
-## 8. 禁止事項
+## 9. 禁止事項
 
 - 生 SQL の使用
 - 外部 CSS ファイルの新規作成（Tailwind 除外）
@@ -108,3 +124,27 @@ src/
 - `lucide-solid` / `lucide-react` の全アイコン一括インポート
 - 1 ファイルに複数責務を混在
 - `TODO` / `FIXME` を残したままマージ
+
+## 10. 補足項目（必要に応じて適用）
+
+プロジェクト要件に応じて、以下を追加適用する。
+
+| レイヤー | 推奨 | ルール |
+|----------|------|--------|
+| **API / BFF** | Elysia / Hono | Bun ネイティブ。BFF（Backend for Frontend）。OpenAPI 準拠（`tanaakk-api-first.mdc`） |
+| **ビルド** | Vite v8 + Rolldown | `tanaakk-stack-selection.mdc` 2.1 に準拠 |
+| **テスト** | Bun test / Vitest | 1 ファイル 1 機能に合わせ、単体テストを colocate |
+| **デプロイ** | Vercel / Cloudflare Pages | エッジ。Docker 不要 |
+
+## 11. 適用ルールの拡張
+
+**足りない項目があれば、本ルールに追加する。**
+
+| 手順 | 内容 |
+|------|------|
+| 1 | 不足を特定。既存セクション（1〜10）に該当するか確認 |
+| 2 | 該当セクションに追記するか、新規セクションを追加 |
+| 3 | 形式は「レイヤー / 技術 / ルール」の表で統一 |
+| 4 | `tanaakk-writing-style.mdc` に従い、略称は括弧で説明 |
+
+プロジェクト固有のルールは `.cursor/rules/` に配置し、本ルールを継承する。
