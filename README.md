@@ -75,9 +75,13 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `docs/10_Responsive_First_Rules.md` | マルチデバイス対応・レスポンシブファースト規則（ブレークポイント、タッチターゲット、検証チェックリスト） |
 | `docs/11_HST_Basic_Concepts.md` | HST 原則の参照（正本は [holographic-sphere-topology](https://github.com/tanaakk/holographic-sphere-topology)） |
 
+## 8 リポジトリ構造
+
+8 つのリポジトリが一つの広域系を形成している。本リポジトリ（universal-guideline）はその一部である。
+
 ## GAAS Hands-on ワークスペース
 
-7 リポジトリを一括で開くには `gaas-hands-on.code-workspace` を使用する。**フォルダとして開いた場合**、[Auto-Open Workspace](https://marketplace.visualstudio.com/items?itemName=zoma.vscode-auto-open-workspace) 拡張（推奨）が起動時に QuickPick でワークスペースへの切り替えを案内する。詳細は `.vscode/README_workspace.md` を参照。
+8 リポジトリを一括で開くには `gaas-hands-on.code-workspace` を使用する。**フォルダとして開いた場合**、[Auto-Open Workspace](https://marketplace.visualstudio.com/items?itemName=zoma.vscode-auto-open-workspace) 拡張（推奨）が起動時に QuickPick でワークスペースへの切り替えを案内する。詳細は `.vscode/README_workspace.md` を参照。
 
 ## 使い方
 
