@@ -1,0 +1,37 @@
+{
+  "folders": [
+    {
+      "name": "universal-guideline",
+      "path": "."
+    },
+    {
+      "name": "GAAS-dissipative-constraints",
+      "path": "../GAAS-dissipative-constraints"
+    },
+    {
+      "name": "complex-physics-scale",
+      "path": "../complex-physics-scale"
+    },
+    {
+      "name": "law-of-scale-verificator",
+      "path": "../law-of-scale-verificator"
+    },
+    {
+      "name": "homotopical-coherence-engine",
+      "path": "../homotopical-coherence-engine"
+    },
+    {
+      "name": "intangibles-valuation-logic",
+      "path": "../intangibles-valuation-logic"
+    },
+    {
+      "name": "operating-leverage-identifier",
+      "path": "../operating-leverage-identifier"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true
+    }
+  }
+}
