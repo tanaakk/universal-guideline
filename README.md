@@ -74,6 +74,10 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `07_TANAAKK_Engineering_Methodology.md` | 従来型 vs TANAAKK 流のエンジニアリング対比（規格準拠の説明、同期モデル、理論と実装） |
 | `docs/10_Responsive_First_Rules.md` | マルチデバイス対応・レスポンシブファースト規則（ブレークポイント、タッチターゲット、検証チェックリスト） |
 
+## GAAS Hands-on ワークスペース
+
+7 リポジトリを一括で開くには `gaas-hands-on.code-workspace` を使用する。**フォルダとして開いた場合**、[Auto-Open Workspace](https://marketplace.visualstudio.com/items?itemName=zoma.vscode-auto-open-workspace) 拡張（推奨）が起動時に QuickPick でワークスペースへの切り替えを案内する。詳細は `.vscode/README_workspace.md` を参照。
+
 ## 使い方
 
 ### プロジェクトに追加
