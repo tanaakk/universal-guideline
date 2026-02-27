@@ -73,6 +73,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `06_Universal_Schema_Concept.md` | ユニバーサルスキーマの概念体系、理論と実装のギャップ |
 | `07_TANAAKK_Engineering_Methodology.md` | 従来型 vs TANAAKK 流のエンジニアリング対比（規格準拠の説明、同期モデル、理論と実装） |
 | `docs/10_Responsive_First_Rules.md` | マルチデバイス対応・レスポンシブファースト規則（ブレークポイント、タッチターゲット、検証チェックリスト） |
+| `docs/11_HST_Basic_Concepts.md` | Holographic Sphere Topology 基本概念（臓器メタファー、境界面、Object/Morphism） |
 
 ## GAAS Hands-on ワークスペース
 
