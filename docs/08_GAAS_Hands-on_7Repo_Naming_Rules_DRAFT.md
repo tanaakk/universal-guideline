@@ -23,7 +23,7 @@
 
 | # | リポジトリ | ルート番号付き | docs/ | 備考 |
 |---|-----------|----------------|-------|------|
-| 1 | universal-guideline | 04, 05, 06, 07 | なし | tanaakk-*.mdc 多数、uuid-classification-rules/ |
+| 1 | universal-guideline | 00, 04, 05, 06, 07 | docs | tanaakk-*.mdc 多数、70_uuid-classification-rules/ |
 | 2 | GAAS-dissipative-constraints | 04, 05, 06 | なし | 最小構成 |
 | 3 | complex-physics-scale | **00, 01, 02, 03, 04, 05, 06** | なし | **Canonical**（参照モデル） |
 | 4 | law-of-scale-verificator | 04, 05, 06 | 10-categories-matrix, verification-checklist | tanaakk-*.mdc |
@@ -181,7 +181,7 @@ UPPER_SNAKE: アーキテクチャ・ホワイトペーパー（順序なし、�
 
 | パターン | 用途 | 例 |
 |----------|------|-----|
-| `uuid-classification-rules/` | 業種別ルール集 | universal-guideline |
+| `70_uuid-classification-rules/` | 業種別ルール集 | universal-guideline |
 | `docs/` | 補足ドキュメント | 全リポジトリ |
 | `schemas/` | JSON Schema 等 | homotopical-coherence-engine |
 | `scripts/` | 自動化スクリプト | complex-physics-scale |

@@ -2,7 +2,7 @@
 
 空間・資産が中心であり、購入者・賃借人が利用者となる業種。建設業では**工事発注ロット**に基づく動員管理が中核となる。
 
-`uuid-classification-rules/README.md` の用語対応（対象=logic_id/v4、記録=phys_id/v7）に準拠する。無形資産評価の観点（[intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic)）に基づく Object の追加・理由の補足を含む。
+`70_uuid-classification-rules/README.md` の用語対応（対象=logic_id/v4、記録=phys_id/v7）に準拠する。無形資産評価の観点（[intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic)）に基づく Object の追加・理由の補足を含む。
 
 ## 業種の特性
 

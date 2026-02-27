@@ -2,7 +2,7 @@
 
 モノが中心であり、モノを最終的に所有する消費者が計測対象となる業種。**モノが世界中の場所を動く**場合、その経路のノード（作業場、加工場、工程）も採番対象となる。
 
-`uuid-classification-rules/README.md` の用語対応（対象=logic_id/v4、記録=phys_id/v7）に準拠する。無形資産評価の観点（[intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic)）に基づく Object の追加・理由の補足を含む。
+`70_uuid-classification-rules/README.md` の用語対応（対象=logic_id/v4、記録=phys_id/v7）に準拠する。無形資産評価の観点（[intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic)）に基づく Object の追加・理由の補足を含む。
 
 ## 業種の特性
 

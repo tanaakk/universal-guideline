@@ -49,7 +49,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 |----------|------|
 | `tanaakk-universal-schema.mdc` | Universal Data Architecture。規格階層（L4A/L4B/L4C）、UUID v4、会計API連携、クロスドメイン結合 |
 | `tanaakk-uuid-hybrid.mdc` | UUID v4/v7 ハイブリッド（デジタルツイン・イベント発行、計算資源節約のスキーマ構成） |
-| `uuid-classification-rules/` | 業種別ケーススタディ（製造小売業、不動産・建設業の v4/v7/採番なし 分類） |
+| `70_uuid-classification-rules/` | 業種別ケーススタディ（製造小売業、不動産・建設業の v4/v7/採番なし 分類） |
 | `tanaakk-saas-procedure.mdc` | TANAAKK SaaS 標準プロシージャ（ドメイン先行・UI 先行 v1.0.0 リリース） |
 | `tanaakk-api-first.mdc` | API First / Schema First の開発ワークフロー指針 |
 | `tanaakk-url-sitemap-seo.mdc` | URL・サイトマップの階層化・命名規則（SEO、日本語パス禁止） |
