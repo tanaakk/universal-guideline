@@ -68,6 +68,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 
 | ファイル | 説明 |
 |----------|------|
+| `01_IO_Specification.md` | I/O Specification の定義と本リポジトリの想定 I/O |
 | `04_Repository_Relationships.md` | 5 層フレームワーク対応リポジトリ一覧 |
 | `05_Folder_Structure_Convention.md` | 5 リポジトリ統一フォルダ構成・命名規則 |
 | `06_Universal_Schema_Concept.md` | ユニバーサルスキーマの概念体系、理論と実装のギャップ |
@@ -78,6 +79,17 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 ## 8 リポジトリ構造
 
 8 つのリポジトリが一つの広域系を形成している。本リポジトリ（universal-guideline）はその一部である。
+
+| リポジトリ | リンク |
+|-----------|--------|
+| universal-guideline | [github.com/tanaakk/universal-guideline](https://github.com/tanaakk/universal-guideline) |
+| holographic-sphere-topology | [github.com/tanaakk/holographic-sphere-topology](https://github.com/tanaakk/holographic-sphere-topology) |
+| GAAS-dissipative-constraints | [github.com/tanaakk/GAAS-dissipative-constraints](https://github.com/tanaakk/GAAS-dissipative-constraints) |
+| complex-physics-scale | [github.com/tanaakk/complex-physics-scale](https://github.com/tanaakk/complex-physics-scale) |
+| law-of-scale-verificator | [github.com/tanaakk/law-of-scale-verificator](https://github.com/tanaakk/law-of-scale-verificator) |
+| homotopical-coherence-engine | [github.com/tanaakk/homotopical-coherence-engine](https://github.com/tanaakk/homotopical-coherence-engine) |
+| intangibles-valuation-logic | [github.com/tanaakk/intangibles-valuation-logic](https://github.com/tanaakk/intangibles-valuation-logic) |
+| operating-leverage-identifier | [github.com/tanaakk/operating-leverage-identifier](https://github.com/tanaakk/operating-leverage-identifier) |
 
 ## GAAS Hands-on ワークスペース
 
