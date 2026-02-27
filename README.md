@@ -62,6 +62,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `tanaakk-mes-manufacturing.mdc` | MES・縫製・製造（インナーウェア、刺繍糸かせとりき等）の汎用スキーマ |
 | `tanaakk-language-selection.mdc` | 言語・フレームワーク選択指針 |
 | `tanaakk-ui-ux.mdc` | 共通UI/UX（カラー・タイポ・アクセシビリティ） |
+| `tanaakk-responsive-first.mdc` | マルチデバイス対応・レスポンシブファースト規則（W3C/WCAG/web.dev 準拠） |
 
 ## 概念・補足ドキュメント
 
@@ -71,6 +72,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `05_Folder_Structure_Convention.md` | 5 リポジトリ統一フォルダ構成・命名規則 |
 | `06_Universal_Schema_Concept.md` | ユニバーサルスキーマの概念体系、理論と実装のギャップ |
 | `07_TANAAKK_Engineering_Methodology.md` | 従来型 vs TANAAKK 流のエンジニアリング対比（規格準拠の説明、同期モデル、理論と実装） |
+| `docs/10_Responsive_First_Rules.md` | マルチデバイス対応・レスポンシブファースト規則（ブレークポイント、タッチターゲット、検証チェックリスト） |
 
 ## 使い方
 
