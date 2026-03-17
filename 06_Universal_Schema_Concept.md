@@ -4,6 +4,20 @@
 
 ---
 
+## 0. 前提条件（物理の三大構造原理）
+
+Universal Guideline は、この宇宙に存在する任意のシステムが次の 3 原理を大局制約（global constraints）として満たすことを前提とする。
+
+- **Locality（局所性）**
+- **Causality（因果性）**
+- **Unitarity（ユニタリ性）**
+
+すなわち、任意のシステム `S` は `S |= (L ∧ C ∧ U)` を満たすものとして扱う。
+
+参照: [物理の三大構造原理](https://www.tanaakk.com/2026/03/17/physics-2/)
+
+---
+
 ## 1. Universal Guideline のスコープと階層の繰り下げ（2026年2月）
 
 **Universal Guideline は L3 以降の階層を定義する。** L0〜L2 は [groundism-ontopologics](https://github.com/tanaakk/groundism-ontopologics) 等で定義される。

@@ -11,6 +11,18 @@ TANAAKKグループが提供する全アプリで共通利用する Cursor AI �
 - **地球のベストプラクティス**: 最新時点での業界標準（Google AIP、Microsoft、IANA、会計API連携等）を採用し、随時更新する。
 - **多惑星文明のベストプラクティス**: NASA/ホワイトハウス Celestial Time Standardization Policy、Coordinated Lunar Time (LTC)、火星時間等、重力圏に応じた抽象時間・参照系の標準が策定・普及するに従い、それらを取り込んで更新する。
 
+## Universal Guideline の前提条件
+
+この宇宙に存在する任意のシステムは、以下の 3 つの物理原理を大局制約（global constraints）として満たすことを前提とする。
+
+- **Locality（局所性）**: 相互作用・情報伝播は局所的結合を通じて生起し、超光速の因果的伝達を許さない。
+- **Causality（因果性）**: 原因は結果に先行し、システムの時間発展は因果順序を保存する。
+- **Unitarity（ユニタリ性）**: 系の確率・情報が保存される。
+
+形式的には、任意のシステム `S` について `S |= (L ∧ C ∧ U)` を満たすものとして扱う。
+
+参照: [物理の三大構造原理](https://www.tanaakk.com/2026/03/17/physics-2/)
+
 ## Universal Guideline のスコープと階層
 
 **本リポジトリは L3 以降の階層を定義する。** L0〜L2 は [groundism-ontopologics](https://github.com/tanaakk/groundism-ontopologics) 等で定義される。
