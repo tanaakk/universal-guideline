@@ -34,7 +34,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | **L3** | **Universal Guideline** | **UUID v4**。識別子規格。対象（identity）の層 | 対象 |
 | **L4** | **Universal Guideline** | 対象への射としての属性 | L3 対象への**射** |
 | **L4A** | 同上 | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
-| **L4B** | 同上 | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4B** | 同上 | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES, Amazon Marketplace Ads |
 | **L4C** | 同上 | インダストリ別 | 建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life |
 | **L5** | **Universal Guideline** | プロジェクト | L4 を前提とした実装 |
 
@@ -77,6 +77,7 @@ flowchart TD
         I[tanaakk-url-sitemap-seo.mdc]
         J[tanaakk-ui-ux.mdc]
         K[tanaakk-language-selection.mdc]
+        ADS[tanaakk-amazon-sponsored-ads.mdc]
     end
 
     subgraph L5["L5: プロジェクト"]
@@ -94,6 +95,7 @@ flowchart TD
     A --> I
     A --> J
     A --> K
+    A --> ADS
     A --> H
 ```
 
@@ -107,7 +109,7 @@ flowchart TD
 | **L3** | Universal Guideline | **UUID v4** を識別子規格として採用。PK/FK、時間、単位、通貨、会計、クロスドメイン結合 |
 | **L4** | Universal Guideline | 対象への射としての属性 |
 | **L4A** | Universal Guideline | 産業分類（国家・国際管理）。ISIC, NACE, CPC, NAICS |
-| **L4B** | Universal Guideline | クロスインダストリ。ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4B** | Universal Guideline | クロスインダストリ。ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES, Amazon Marketplace Ads |
 | **L4C** | Universal Guideline | インダストリ別。建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life |
 | **L5** | Universal Guideline | プロジェクト固有のコーディング規約（Zustand、react-query-kit 等） |
 
@@ -213,16 +215,17 @@ flowchart TD
 
 ## 6. 参照マトリクス
 
-|  | universal | api-first | security | url-sitemap-seo | ui-ux | language-selection | vehicle | mes | physical-branding |
-|---|-----------|-----------|----------|-----------------|-------|-------------------|---------|-----|-------------------|
-| **universal** | - | - | - | - | - | - | - | - | - |
-| **api-first** | ✓ 併用 | - | - | - | - | - | - | - | - |
-| **security** | ✓ 併用 | - | - | - | - | - | - | - | - |
-| **url-sitemap-seo** | ✓ 併用 | - | - | - | - | - | - | - | - |
-| **ui-ux** | - | - | - | - | - | - | - | - | - |
-| **language-selection** | - | - | - | - | - | - | - | - | - |
-| **vehicle** | ✓ ベース | - | - | - | - | - | - | - | - |
-| **mes** | ✓ ベース | - | - | - | - | - | - | - | - |
-| **physical-branding** | ✓ 併用 | - | - | - | - | - | - | - | - |
+|  | universal | api-first | security | url-sitemap-seo | ui-ux | language-selection | vehicle | mes | physical-branding | amazon-ads |
+|---|-----------|-----------|----------|-----------------|-------|-------------------|---------|-----|-------------------|------------|
+| **universal** | - | - | - | - | - | - | - | - | - | - |
+| **api-first** | ✓ 併用 | - | - | - | - | - | - | - | - | - |
+| **security** | ✓ 併用 | - | - | - | - | - | - | - | - | - |
+| **url-sitemap-seo** | ✓ 併用 | - | - | - | - | - | - | - | - | - |
+| **ui-ux** | - | - | - | - | - | - | - | - | - | - |
+| **language-selection** | - | - | - | - | - | - | - | - | - | - |
+| **vehicle** | ✓ ベース | - | - | - | - | - | - | - | - | - |
+| **mes** | ✓ ベース | - | - | - | - | - | - | - | - | - |
+| **physical-branding** | ✓ 併用 | - | - | - | - | - | - | - | - | - |
+| **amazon-ads** | ✓ 併用 | - | - | - | - | - | - | - | ✓ SKU | - |
 
 **原則**: L3 は他を参照しない。L4/L5 は L3 を必ず参照する（ui-ux、language-selection は L3 に依存しない横断ルール）。

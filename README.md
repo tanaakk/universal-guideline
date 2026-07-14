@@ -42,7 +42,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | 層 | 内容 | 主な規格 |
 |----|------|----------|
 | **L4A** | 産業分類（国家・国際管理） | ISIC, NACE, CPC, NAICS |
-| **L4B** | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES |
+| **L4B** | クロスインダストリ | ISO 8601, ISO 4217, GTIN, EDI, ISO 20022, IAM, MES, Amazon Marketplace Ads |
 | **L4C** | インダストリ別 | 建築, 貴金属, 宝石, 鉱物・宝石学, 繊維, 元素, 宇宙機, 時計, メティエダール, 発電, 保険, 金融, 石油・ガス, 医療, 農業・食品, Fauna・Flora・Marine life（ミュージオロジー） |
 
 **識別子は UUID v4 のみ。** 上記規格コードはすべて属性として格納し、PK/FK には使用しない。
@@ -72,6 +72,7 @@ UUID v4 を識別子規格として採用した場合、車両・製造・建設
 | `tanaakk-vehicle-geospatial.mdc` | 車両DB・位置情報・建設・FMの汎用スキーマ |
 | `tanaakk-physical-branding-sku.mdc` | 物理ブランディング・SKU（UUID 中核、デジタルツイン）。貴金属・宝石・鉱物・宝石学・繊維・元素・宇宙機・時計・メティエダール・発電・保険・金融・石油・ガス・医療・農業・食品・Fauna・Flora・Marine life（ミュージオロジー）の規格 |
 | `tanaakk-mes-manufacturing.mdc` | MES・縫製・製造（インナーウェア、刺繍糸かせとりき等）の汎用スキーマ |
+| `tanaakk-amazon-sponsored-ads.mdc` | Amazon VC/SC 前提の Sponsored Products キーワード探索→3日判定→勝ち残し運用（在庫≥5ゲート） |
 | `tanaakk-language-selection.mdc` | 言語・フレームワーク選択指針 |
 | `tanaakk-ui-ux.mdc` | 共通UI/UX（カラー・タイポ・アクセシビリティ） |
 | `tanaakk-responsive-first.mdc` | マルチデバイス対応・レスポンシブファースト規則（W3C/WCAG/web.dev 準拠） |
